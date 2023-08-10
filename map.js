@@ -65,7 +65,34 @@ async function addAllShopsToMap(file) {
 
   var featuresLayer = new L.GeoJSON(shops, {
     onEachFeature: function (feature, marker) {
-        marker.bindPopup("<p>" + feature.properties.name + "<p>");
+        marker.bindPopup(`<p><b>My Market</b></p>
+        <div>
+        <div style="background-color: white;
+            width: 250px;
+            height: 300px;
+          
+            overflow: scroll;">
+          <p>Όνομα Προϊόντος</p>
+          <p class="card-text" id="price">Τιμή:4$</p>
+          <p>Ημερομηνία Καταχώρησης: 12/11/22</p>
+          <p>Απόθεμα: ΝΑΙ</p>
+          <p>Likes: 23</p>
+          <p>Dislikes: 2</p>
+          <a href="userFeedback.html" class="btn btn-outline-success"><h6>Αξιολόγηση Προσφοράς</h6></a>
+          <br>
+          <p>Όνομα Προϊόντος
+          <p class="card-text" id="price">Τιμή:4$</p>
+          <p>Ημερομηνία Καταχώρησης: 12/11/22</p>
+          <p>Απόθεμα: ΝΑΙ</p>
+          <p>Likes: 23</p>
+          <p>Dislikes: 2</p>
+          <a href="userFeedback.html" class="btn btn-outline-success"><h6>Αξιολόγηση Προσφοράς</h6></a>
+          <br>
+          </div>
+          <a  href="offerUpload.html" class="btn btn-outline-success "><h6>Υποβολή Προσφοράς</h6></a>
+          </div>
+          <?php echo"hello"?>
+            `);
         marker.addTo(markersLayer);
     }
   });
@@ -84,22 +111,24 @@ async function addAllShopsToMap(file) {
 }
 
 function selectShops(){
-	let category_id = document.getElementById("selectCategory").value;
-	let shops;
+    let category_id = document.getElementById("selectCategory").value;
+    let shops;
 	console.log(category_id);
+    category_id = 1;
 	const xhttp = new XMLHttpRequest();
-  var redIcon = L.icon({
+  /*var redIcon = L.icon({
     iconUrl: 'redpin.png',
 
     iconSize:     [38, 38], // size of the icon
     iconAnchor:   [1, 1], // point of the icon which will correspond to marker's location
     popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-});
+});*/
 
 	xhttp.onload = function(){
     document.getElementById("demo").innerHTML = this.responseText;
 	  shops = JSON.parse(this.responseText);
-    
+        console.log(shops);
+        console.log(shops[0].latitude);
     //mymap.removeLayer(markersLayer);
 	  const shopsLayer = L.layerGroup();
     let shopPositionMarker;
