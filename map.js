@@ -52,16 +52,17 @@ function setPosition(position){
             `);
 }
 let  shops;
+const markersLayer = L.layerGroup();
+mymap.addLayer(markersLayer);
+markersLayer.addTo(mymap);
 addAllShopsToMap("shops.geojson");
 
 async function addAllShopsToMap(file) {
   let myObject = await fetch(file);
   let myText = await myObject.text();
   shops = JSON.parse(myText);
+console.log("all  "+shops);
 
-  const markersLayer = L.layerGroup();
-  mymap.addLayer(markersLayer);
-  markersLayer.addTo(mymap);
 
   var featuresLayer = new L.GeoJSON(shops, {
     onEachFeature: function (feature, marker) {
@@ -110,42 +111,38 @@ async function addAllShopsToMap(file) {
   
 }
 
-function selectShops(){
+function selectShops() {
     let category_id = document.getElementById("selectCategory").value;
     let shops;
-	console.log(category_id);
+    console.log(category_id);
     category_id = 1;
-	const xhttp = new XMLHttpRequest();
-  /*var redIcon = L.icon({
-    iconUrl: 'redpin.png',
-
-    iconSize:     [38, 38], // size of the icon
-    iconAnchor:   [1, 1], // point of the icon which will correspond to marker's location
-    popupAnchor:  [-3, -76] // point from which the popup should open relative to the iconAnchor
-});*/
-
-	xhttp.onload = function(){
-    document.getElementById("demo").innerHTML = this.responseText;
-	  shops = JSON.parse(this.responseText);
-        console.log(shops);
-        console.log(shops[0].latitude);
-    //mymap.removeLayer(markersLayer);
-	  const shopsLayer = L.layerGroup();
-    let shopPositionMarker;
-    mymap.addLayer(shopsLayer);
-    shopsLayer.addTo(mymap);
-    //selectedShops.addTo(mymap);
-    var shopLayer = new L.GeoJSON(shops, {
-      onEachFeature: function (feature, marker) {
-          marker.bindPopup("<p>" + feature.name + "<p>");
-          marker.addTo(shopsLayer);
-      }
-    });
-    shopLayer.addTo(mymap);
-    
-	}
-	xhttp.open("POST", "selectShopsByCategory.php?q="+category_id);
-	xhttp.send();
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            shops = JSON.parse(this.responseText);
+            let selectedShopsLayer = L.layerGroup();
+            mymap.addLayer(selectedShopsLayer);
+            selectedShopsLayer.addTo(mymap);
+            mymap.removeLayer(markersLayer);
+            for (i in shops) {
+                let shop_id = shops[i].id;
+                let name = shops[i].name;
+                let lat = shops[i].latitude;
+                let log = shops[i].longtitude;
+                const xhttp = new XMLHttpRequest();
+                xhttp.onload = function () {
+                    let offers = JSON.parse(this.responseText);
+                    console.log(offers);
+                    xhttp.open("POST", "getOffers.php?q=" + shop_id);
+                    xhttp.send();
+                }
+                let marker = L.marker(L.latLng([lat, log]), {title: name});
+                marker.addTo(selectedShopsLayer);
+            }
+        }
+    }
+    xhttp.open("POST", "selectShopsByCategory.php?q=" + category_id);
+    xhttp.send();
 
 }
   
