@@ -117,8 +117,7 @@ function selectShops() {
     console.log(category_id);
     category_id = 1;
     const xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
+    xhttp.onload = function () {
             shops = JSON.parse(this.responseText);
             let selectedShopsLayer = L.layerGroup();
             mymap.addLayer(selectedShopsLayer);
@@ -129,17 +128,36 @@ function selectShops() {
                 let name = shops[i].name;
                 let lat = shops[i].latitude;
                 let log = shops[i].longtitude;
+                let marker = L.marker(L.latLng([lat, log]), {title: name});
                 const xhttp = new XMLHttpRequest();
                 xhttp.onload = function () {
                     let offers = JSON.parse(this.responseText);
                     console.log(offers);
-                    xhttp.open("POST", "getOffers.php?q=" + shop_id);
-                    xhttp.send();
+                    for(j in offers){
+                        marker.bindPopup(`<p><b>`+name+`</b></p>
+        <div>
+        <div style="background-color: white;
+            width: 250px;
+            height: 300px;
+            overflow-y: auto;">
+          <p>Όνομα Προϊόντος`+offers[j].name+`</p>
+          <p class="card-text" id="price">Τιμή:`+offers[j].price+`</p>
+          <p>Ημερομηνία Καταχώρησης: 12/11/22</p>
+          <p>Απόθεμα: ΝΑΙ</p>
+          <p>Likes: `+offers[j].likes+`</p>
+          <p>Dislikes: `+offers[j].dislikes+`</p>
+          <a href="userFeedback.html" class="btn btn-outline-success"><h6>Αξιολόγηση Προσφοράς</h6></a>
+          <br>
+          </div>
+          <a  href="offerUpload.html" class="btn btn-outline-success "><h6>Υποβολή Προσφοράς</h6></a>
+          </div>`);
+                    }
                 }
-                let marker = L.marker(L.latLng([lat, log]), {title: name});
+                xhttp.open("POST", "getOffers.php?q=" + shop_id);
+                xhttp.send();
                 marker.addTo(selectedShopsLayer);
+
             }
-        }
     }
     xhttp.open("POST", "selectShopsByCategory.php?q=" + category_id);
     xhttp.send();
