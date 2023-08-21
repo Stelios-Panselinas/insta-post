@@ -129,44 +129,52 @@ function selectShops() {
                 let lat = shops[i].latitude;
                 let log = shops[i].longtitude;
                 let marker = L.marker(L.latLng([lat, log]), {title: name});
-                const xhttp = new XMLHttpRequest();
-                xhttp.onload = function () {
-                    let offers = JSON.parse(this.responseText);
-                    console.log(offers);
-                    for(j in offers){
-                        marker.bindPopup(`<p><b>`+name+`</b></p>
-        <div>
-        <div style="background-color: white;
-            width: 250px;
-            height: 300px;
-            overflow-y: auto;">
-          <p>Όνομα Προϊόντος`+offers[j].name+`</p>
-          <p class="card-text" id="price">Τιμή:`+offers[j].price+`</p>
-          <p>Ημερομηνία Καταχώρησης: 12/11/22</p>
-          <p>Απόθεμα: ΝΑΙ</p>
-          <p>Likes: `+offers[j].likes+`</p>
-          <p>Dislikes: `+offers[j].dislikes+`</p>
-          <a href="userFeedback.html" class="btn btn-outline-success"><h6>Αξιολόγηση Προσφοράς</h6></a>
-          <br>
-          </div>
-          <a  href="offerUpload.html" class="btn btn-outline-success "><h6>Υποβολή Προσφοράς</h6></a>
-          </div>`);
-                    }
-                }
-                xhttp.open("POST", "getOffers.php?q=" + shop_id);
-                xhttp.send();
+                        marker.bindPopup(createPopup(shop_id, name));
                 marker.addTo(selectedShopsLayer);
-
+                }
             }
-    }
     xhttp.open("POST", "selectShopsByCategory.php?q=" + category_id);
     xhttp.send();
-
 }
+
   
   function addToMapLawer(shop){
     shopPositionMarker = L.marker([shop.latitude, shop.longitude], {icon: greenIcon}).addTo(shopsLayer);
     marker.bindPopup("<p>" + shop.name + "</p>");
         marker.addTo(shopsLayer);
   }
+
+  function createPopup(shop_id, shop_name){
+      let cur_offer, all_offers;
+      all_offers = "";
+      const xhttp = new XMLHttpRequest();
+      xhttp.onload = function () {
+          let offers = JSON.parse(this.responseText);
+          for(i in offers){
+              cur_offer = `<p><b>`+shop_name+`</b></p>
+        <div>
+        <div style="background-color: white;
+            width: 250px;
+            height: 300px;
+            overflow-y: auto;">
+          <p>Όνομα Προϊόντος`+offers[i].name+`</p>
+          <p class="card-text" id="price">Τιμή:`+offers[i].price+`</p>
+          <p>Ημερομηνία Καταχώρησης: 12/11/22</p>
+          <p>Απόθεμα: ΝΑΙ</p>
+          <p>Likes: `+offers[i].likes+`</p>
+          <p>Dislikes: `+offers[i].dislikes+`</p>
+          <a href="userFeedback.html" class="btn btn-outline-success"><h6>Αξιολόγηση Προσφοράς</h6></a>
+          <br>
+          </div>
+          <a  href="offerUpload.html" class="btn btn-outline-success "><h6>Υποβολή Προσφοράς</h6></a>
+          </div>`
+              console.log(cur_offer);
+              cur_offer = cur_offer + "\n"+ cur_offer;
+          }
+      }
+      xhttp.open("POST", "getOffers.php?q=" + shop_id);
+      xhttp.send();
+      console.log("offers: "+all_offers);
+      return all_offers;
+}
 
