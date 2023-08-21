@@ -61,7 +61,6 @@ async function addAllShopsToMap(file) {
   let myObject = await fetch(file);
   let myText = await myObject.text();
   shops = JSON.parse(myText);
-console.log("all  "+shops);
 
 
   var featuresLayer = new L.GeoJSON(shops, {
@@ -114,7 +113,6 @@ console.log("all  "+shops);
 function selectShops() {
     let category_id = document.getElementById("selectCategory").value;
     let shops;
-    console.log(category_id);
     category_id = 1;
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function () {
@@ -129,7 +127,8 @@ function selectShops() {
                 let lat = shops[i].latitude;
                 let log = shops[i].longtitude;
                 let marker = L.marker(L.latLng([lat, log]), {title: name});
-                        marker.bindPopup(createPopup(shop_id, name));
+                console.log("returned offers:"+createPopup(shop_id, name))
+                marker.bindPopup(createPopup(shop_id, name));
                 marker.addTo(selectedShopsLayer);
                 }
             }
@@ -144,37 +143,38 @@ function selectShops() {
         marker.addTo(shopsLayer);
   }
 
-  function createPopup(shop_id, shop_name){
-      let cur_offer, all_offers;
-      all_offers = "";
-      const xhttp = new XMLHttpRequest();
-      xhttp.onload = function () {
-          let offers = JSON.parse(this.responseText);
-          for(i in offers){
-              cur_offer = `<p><b>`+shop_name+`</b></p>
+function createPopup(shop_id, shop_name) {
+    let cur_offer, all_offers;
+    all_offers = "";
+    const xhttp = new XMLHttpRequest();
+    xhttp.onload = function () {
+        let offers = JSON.parse(this.responseText);
+        for (i in offers) {
+            cur_offer = `<p><b>` + shop_name + `</b></p>
         <div>
         <div style="background-color: white;
             width: 250px;
             height: 300px;
             overflow-y: auto;">
-          <p>Όνομα Προϊόντος`+offers[i].name+`</p>
-          <p class="card-text" id="price">Τιμή:`+offers[i].price+`</p>
+          <p>Όνομα Προϊόντος` + offers[i].name + `</p>
+          <p class="card-text" id="price">Τιμή:` + offers[i].price + `</p>
           <p>Ημερομηνία Καταχώρησης: 12/11/22</p>
           <p>Απόθεμα: ΝΑΙ</p>
-          <p>Likes: `+offers[i].likes+`</p>
-          <p>Dislikes: `+offers[i].dislikes+`</p>
+          <p>Likes: ` + offers[i].likes + `</p>
+          <p>Dislikes: ` + offers[i].dislikes + `</p>
           <a href="userFeedback.html" class="btn btn-outline-success"><h6>Αξιολόγηση Προσφοράς</h6></a>
           <br>
           </div>
           <a  href="offerUpload.html" class="btn btn-outline-success "><h6>Υποβολή Προσφοράς</h6></a>
-          </div>`
-              console.log(cur_offer);
-              cur_offer = cur_offer + "\n"+ cur_offer;
-          }
-      }
-      xhttp.open("POST", "getOffers.php?q=" + shop_id);
-      xhttp.send();
-      console.log("offers: "+all_offers);
-      return all_offers;
+          </div>\n`
+            all_offers = all_offers +cur_offer;
+        }
+        //console.log("offers: " + all_offers);
+        return all_offers;
+    }
+    console.log(xhttp.onload)
+    xhttp.open("POST", "getOffers.php?q=" + shop_id);
+    xhttp.send();
+
 }
 
