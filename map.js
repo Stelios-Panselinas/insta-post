@@ -5,6 +5,7 @@ let osmUrl='https://tile.openstreetmap.org/{z}/{x}/{y}.png';
 let osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
 let osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
 mymap.addLayer(osm);
+mymap.setView([38.245466, 21.735505], 14);
 
 // get user position
 if (navigator.geolocation) {
@@ -127,8 +128,7 @@ function selectShops() {
                 let lat = shops[i].latitude;
                 let log = shops[i].longtitude;
                 let marker = L.marker(L.latLng([lat, log]), {title: name});
-                console.log("returned offers:"+createPopup(shop_id, name))
-                marker.bindPopup(createPopup(shop_id, name));
+                marker.bindPopup(createPopup(shop_id, name,lat,log));
                 marker.addTo(selectedShopsLayer);
                 }
             }
@@ -136,45 +136,46 @@ function selectShops() {
     xhttp.send();
 }
 
-  
-  function addToMapLawer(shop){
-    shopPositionMarker = L.marker([shop.latitude, shop.longitude], {icon: greenIcon}).addTo(shopsLayer);
-    marker.bindPopup("<p>" + shop.name + "</p>");
-        marker.addTo(shopsLayer);
-  }
-
-function createPopup(shop_id, shop_name) {
-    let cur_offer, all_offers;
-    all_offers = "";
+function createPopup(shop_id, shop_name, lat, log) {
+    let cur_offer;
+    let all_offers = "";
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function () {
         let offers = JSON.parse(this.responseText);
-        for (i in offers) {
-            cur_offer = `<p><b>` + shop_name + `</b></p>
-        <div>
+        all_offers = `<p><b>` + shop_name + `</b></p>
         <div style="background-color: white;
             width: 250px;
-            height: 300px;
-            overflow-y: auto;">
-          <p>Όνομα Προϊόντος` + offers[i].name + `</p>
+            height: 330px;
+            overflow: auto;">`
+        for (i in offers) {
+            cur_offer = `<p>Όνομα Προϊόντος` + offers[i].name + `</p>
           <p class="card-text" id="price">Τιμή:` + offers[i].price + `</p>
           <p>Ημερομηνία Καταχώρησης: 12/11/22</p>
           <p>Απόθεμα: ΝΑΙ</p>
           <p>Likes: ` + offers[i].likes + `</p>
           <p>Dislikes: ` + offers[i].dislikes + `</p>
-          <a href="userFeedback.html" class="btn btn-outline-success"><h6>Αξιολόγηση Προσφοράς</h6></a>
+          <a href="userFeedback.html" onclick="rateOffers(`+shop_id+`)" class="btn btn-outline-success"><h6>Αξιολόγηση Προσφοράς</h6></a>
           <br>
-          </div>
           <a  href="offerUpload.html" class="btn btn-outline-success "><h6>Υποβολή Προσφοράς</h6></a>
-          </div>\n`
+          <br>`
+
             all_offers = all_offers +cur_offer;
         }
-        //console.log("offers: " + all_offers);
+        all_offers = all_offers + `</div>`
+        console.log(all_offers);
+        returnOffers(all_offers,lat, log);
         return all_offers;
     }
-    console.log(xhttp.onload)
     xhttp.open("POST", "getOffers.php?q=" + shop_id);
     xhttp.send();
 
 }
 
+function returnOffers(offers, lat, log){
+    let selectedShopsLayer = L.layerGroup();
+    mymap.addLayer(selectedShopsLayer);
+    selectedShopsLayer.addTo(mymap);
+    let marker = L.marker(L.latLng([lat, log]), {title: name});
+    marker.bindPopup(offers);
+    marker.addTo(selectedShopsLayer);
+}
