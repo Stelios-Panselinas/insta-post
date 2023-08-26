@@ -154,15 +154,14 @@ function createPopup(shop_id, shop_name, lat, log) {
           <p>Απόθεμα: ΝΑΙ</p>
           <p>Likes: ` + offers[i].likes + `</p>
           <p>Dislikes: ` + offers[i].dislikes + `</p>
-          <a href="userFeedback.html" onclick="rateOffers(`+shop_id+`)" class="btn btn-outline-success"><h6>Αξιολόγηση Προσφοράς</h6></a>
+          <a href="#" onclick="storeShopID(`+shop_id+`)" class="btn btn-outline-success"><h6>Αξιολόγηση Προσφοράς</h6></a>
           <br>
           <a  href="offerUpload.html" class="btn btn-outline-success "><h6>Υποβολή Προσφοράς</h6></a>
           <br>`
 
             all_offers = all_offers +cur_offer;
         }
-        all_offers = all_offers + `</div>`
-        console.log(all_offers);
+        all_offers = all_offers + `</div>`;
         returnOffers(all_offers,lat, log);
         return all_offers;
     }
@@ -178,4 +177,10 @@ function returnOffers(offers, lat, log){
     let marker = L.marker(L.latLng([lat, log]), {title: name});
     marker.bindPopup(offers);
     marker.addTo(selectedShopsLayer);
+}
+
+function storeShopID(shop_id){
+    localStorage.setItem('shop id', shop_id);
+    window.location.href = 'userFeedback.html';
+    //window.open('userFeedback.html');
 }
