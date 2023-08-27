@@ -16,10 +16,10 @@ window.onload = function rateOffers() {
                     <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#btn`+i+`">Περισσότερα</button>
                     <div id="btn`+i+`" class="collapse">
                        <p>Υποβολλή από: user123456789 score 20</p>
-                       <button type="button" class="btn btn-success">LIKE</button>
-                       <button type="button" class="btn btn-danger">DISLIKE</button>
-                       <button type="button" class="btn btn-warning">ΔΕΝ ΥΠΑΡΧΕΙ ΑΠΟΘΕΜΑ</button>
-                       <button type="button" class="btn btn-info">ΞΑΝΑ ΣΕ ΑΠΟΘΕΜΑ</button>
+                       <button type="button" class="btn btn-success" id="like">LIKE</button>
+                       <button type="button" class="btn btn-danger" id="dislike">DISLIKE</button>
+                       <button type="button" onclick="disableButtons()" id="out-of-stock" class="btn btn-warning">ΔΕΝ ΥΠΑΡΧΕΙ ΑΠΟΘΕΜΑ</button>
+                       <button type="button" class="btn btn-info" id="in-stock">ΞΑΝΑ ΣΕ ΑΠΟΘΕΜΑ</button>
                     </div>
               </div>
             </div>
@@ -30,4 +30,9 @@ window.onload = function rateOffers() {
     xhttp.open("POST", "getOffers.php?q=" + shop_id);
     xhttp.send();
 
+}
+
+function disableButtons() {
+    document.getElementById("like").disabled = "true";
+    document.getElementById("dislike").disabled = "true";
 }
