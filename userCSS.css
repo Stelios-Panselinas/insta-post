@@ -1,6 +1,8 @@
-.main-site, .row {
+.main-site{
+.row {
     height: 87%;
-    margin-right: unset!important;
+    margin-right: unset !important;
+    }
 }
 
 .mapid {
@@ -11,3 +13,7 @@
     }
 }
 
+.search-results{
+    border: none;
+    clip-path: inset(0 18px 0 0);
+}
