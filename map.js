@@ -9,6 +9,15 @@ mymap.setView([38.245466, 21.735505], 14);
 this.showAllShopsWithOffers();
 this.showShopsWithoutOffer();
 
+
+var redIcon = L.icon({
+    iconUrl: 'redpin.png',
+
+    iconSize:     [40, 45], // size of the icon
+    iconAnchor:   [19, 41], // point of the icon which will correspond to marker's location
+    popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
+});
+
 // get user position
 if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(setPosition);
@@ -27,24 +36,23 @@ function setPosition(position){
         myPositionMarker.bindPopup("Your position");
 }
 
- const markersLayer = L.layerGroup();
- mymap.addLayer(markersLayer);
- markersLayer.addTo(mymap);
+ const shopsWithOffersLayer = L.layerGroup();
+
+const shopsWithoutOffersLayer = L.layerGroup();
+
+const selectedShopsLayer = L.layerGroup();
 
 function showAllShopsWithOffers(){
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function () {
         shops = JSON.parse(this.responseText);
-        let selectedShopsLayer = L.layerGroup();
-        mymap.addLayer(selectedShopsLayer);
-        selectedShopsLayer.addTo(mymap);
-        mymap.removeLayer(markersLayer);
+        mymap.removeLayer(selectedShopsLayer);
         for (i in shops) {
             let shop_id = shops[i].id;
             let name = shops[i].name;
             let lat = shops[i].latitude;
             let log = shops[i].longtitude;
-            createPopup(shop_id, name,lat,log);
+            createPopup(shop_id, name,lat,log,0);
         }
     }
     xhttp.open("POST", "selectAllShopsWithOffers.php");
@@ -56,10 +64,9 @@ function showShopsWithoutOffer(){
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function () {
         shops = JSON.parse(this.responseText);
-        let selectedShopsLayer = L.layerGroup();
-        mymap.addLayer(selectedShopsLayer);
-        selectedShopsLayer.addTo(mymap);
-        mymap.removeLayer(markersLayer);
+        mymap.addLayer(shopsWithoutOffersLayer);
+        shopsWithoutOffersLayer.addTo(mymap);
+        mymap.removeLayer(selectedShopsLayer);
         for (i in shops) {
             let shop_id = shops[i].id;
             let name;
@@ -72,7 +79,7 @@ function showShopsWithoutOffer(){
             let log = shops[i].longtitude;
             let marker = L.marker(L.latLng([lat, log]), {title: name});
             marker.bindPopup(name);
-            marker.addTo(selectedShopsLayer);
+            marker.addTo(shopsWithoutOffersLayer);
         }
     }
     xhttp.open("POST", "selectAllshopsWithoutOffers.php");
@@ -85,23 +92,19 @@ function selectShops() {
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function () {
             shops = JSON.parse(this.responseText);
-            let selectedShopsLayer = L.layerGroup();
-            mymap.addLayer(selectedShopsLayer);
-            selectedShopsLayer.addTo(mymap);
-            mymap.removeLayer(markersLayer);
             for (i in shops) {
                 let shop_id = shops[i].id;
                 let name = shops[i].name;
                 let lat = shops[i].latitude;
                 let log = shops[i].longtitude;
-                createPopup(shop_id, name,lat,log);
+                createPopup(shop_id, name,lat,log,1);
                 }
             }
     xhttp.open("POST", "selectShopsByCategory.php?q=" + category_id);
     xhttp.send();
 }
 
-function createPopup(shop_id, shop_name, lat, log) {
+function createPopup(shop_id, shop_name, lat, log, isSelected) {
     let cur_offer;
     let all_offers = "";
     const xhttp = new XMLHttpRequest();
@@ -127,7 +130,7 @@ function createPopup(shop_id, shop_name, lat, log) {
             all_offers = all_offers +cur_offer;
         }
         all_offers = all_offers + `</div>`;
-        showOffers(all_offers,lat, log);
+        showOffers(all_offers,lat, log, isSelected);
         return all_offers;
     }
     xhttp.open("POST", "getOffers.php?q=" + shop_id);
@@ -135,20 +138,21 @@ function createPopup(shop_id, shop_name, lat, log) {
 
 }
 
-var redIcon = L.icon({
-    iconUrl: 'redpin.png',
-
-    iconSize:     [40, 45], // size of the icon
-    iconAnchor:   [19, 41], // point of the icon which will correspond to marker's location
-    popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
-});
-function showOffers(offers, lat, log){
-    let selectedShopsLayer = L.layerGroup();
-    mymap.addLayer(selectedShopsLayer);
-    selectedShopsLayer.addTo(mymap);
+function showOffers(offers, lat, log, isSelected){
     let marker = L.marker(L.latLng([lat, log]), {icon: redIcon});
-    marker.bindPopup(offers);
-    marker.addTo(selectedShopsLayer);
+    if(isSelected){
+        mymap.addLayer(selectedShopsLayer);
+        selectedShopsLayer.addTo(mymap);
+        marker.bindPopup(offers);
+        marker.addTo(selectedShopsLayer);
+        mymap.removeLayer(shopsWithOffersLayer);
+        mymap.removeLayer(shopsWithoutOffersLayer);
+    }else{
+        mymap.addLayer(shopsWithOffersLayer);
+        shopsWithOffersLayer.addTo(mymap);
+        marker.bindPopup(offers);
+        marker.addTo(shopsWithOffersLayer);
+    }
 }
 
 function storeShopID(shop_id){

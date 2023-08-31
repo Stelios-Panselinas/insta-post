@@ -6,7 +6,7 @@
 }
 
 .mapid {
-    height: 915px;
+    height: 847px;
     padding: 9px;
     @media only screen and (max-width: 768px) {
         height: 100%;
