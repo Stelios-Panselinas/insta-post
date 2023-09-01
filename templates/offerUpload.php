@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>Υποβολή Προσφοράς</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/userCSS.css"/>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-bg bg-primary navbar-dark">
+            <div class="container-fluid" style="padding: 30;">
+              <a class="navbar-brand"><h1 class="display-6">Προσθήκη Προσφοράς</h1></a>
+            </div>
+        </nav>
+
+        <div class="container mt-3" style="padding: 70px;">
+            <div class="row">
+                <div class="col-md-4" style="padding: 10px;">
+
+                    <h4>Αναζήτηση Προϊόντος</h4>
+                    <form>
+                    
+                        <input type="text" id="searchBar" class="form-control rounded" placeholder="Search" onkeyup="showResult(this.value)" />
+                    
+                      <script src = "../js/offer.js"></script>
+                      <select multiple class="form-select search-results" id="results" onclick="autoFill(this.value)">
+                      </select>
+                    </form>
+                </div>
+                <div class="col-md-8" style="padding: 10px;">
+                    <h4>Συμπλήρωση Στοιχείων Προϊόντος</h4>
+                    <br>
+                    <form>
+                        <h5>Επιλογή Κατηγορίας:</h5>
+                        <select class="form-select mt-3" id="category" onchange="sub()">
+                            <option value="0">Επιλέξτε Κατηγορία</option>
+                            <option value="1">Βρεφικά Είδη</option>
+                            <option value="2">Για κατοικίδια</option>
+                            <option value="3">Καθαριότητα</option>
+                            <option value="4">Ποτά-Αναψυκτικά</option>
+                        </select>
+                        <br>
+                        <h5>Επιλογή Υποατηγορίας:</h5>
+                        <select class="form-select mt-3" id="subcategory" onchange="prod()">
+                            <option value="0">Επιλέξτε Υποατηγορία</option>
+                        </select>
+                        <br>
+                        <h5>Επιλογή Προϊόντος:</h5>
+                        <select class="form-select mt-3" id="products">
+                            
+                        </select>
+                        <br>
+                        <h5>Προσθήκη Τιμής:</h5>
+                        <input type="text" class="form-control" placeholder="Τιμή..." id="price">
+                        <p id="text"></p>
+                        </form>
+                </div>
+                
+            </div>
+            <div class="row" style="width:50% ;">
+                <br>
+                <button type="button" class="btn btn-success" onclick="submit()">Υποβολή Προσφοράς</button>
+            </div>         
+        </div>
+    </body>
+</html>
