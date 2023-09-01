@@ -1,5 +1,6 @@
 <?php
-class Offer extends Offer_model{
+trait Offer {
+    use Offer_model;
 
     public function __construct(){
 

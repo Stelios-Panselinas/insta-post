@@ -14,13 +14,13 @@
                 <h1 class="display-4 text-white">Καλώς Ήρθες!</h1>
             </div>
             <div class="row d-flex">
-                <a type="button" href="userSearch.php" class="btn btn-primary"><h3>Αναζήτηση Προϊόντων</h3></a>
+                <a type="button" href="userSearch" class="btn btn-primary"><h3>Αναζήτηση Προϊόντων</h3></a>
                 <br>
                 <br>
                 <a type="button" class="btn btn-primary"><h3>Κατάταξη</h3></a>
                 <br>
                 <br>
-                <a type="button" href="userProfile.php" class="btn btn-primary"><h3>Επεξεργασία Προφιλ</h3></a>
+                <a type="button" href="userProfile" class="btn btn-primary"><h3>Επεξεργασία Προφιλ</h3></a>
                 <br>
                 <br>
                 <a type="button" href="https://e-katanalotis.gov.gr/householdBasket" class="btn btn-primary"><h3>e-Καταναλωτής</h3></a>

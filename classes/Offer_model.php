@@ -1,6 +1,6 @@
 <?php
-class Offer_model extends Base_model{
-
+trait Offer_model {
+use Database;
     function __construct()
     {
 
@@ -8,7 +8,7 @@ class Offer_model extends Base_model{
 
     public function getAllOffersFromShop(int $shop_id){
         if (!empty($db)) {
-            $stmt = $db->query("SELECT offers.offer_id, offers.user_id, offers.product_id, offers.price, offers.valid, offers.likes, offers.dislikes, product.name AS product_name FROM offers INNER JOIN product ON offers.product_id=product.product_id WHERE offers.shop_id=?;");
+            $stmt = $this->prepare("SELECT offers.offer_id, offers.user_id, offers.product_id, offers.price, offers.valid, offers.likes, offers.dislikes, product.name AS product_name FROM offers INNER JOIN product ON offers.product_id=product.product_id WHERE offers.shop_id=?;");
             $stmt->bind_param("i", $shop_id);
             $stmt->execute();
             $result = $stmt->get_result();
@@ -26,7 +26,7 @@ class Offer_model extends Base_model{
 
     public function getFilteredOffers(int $shop_id, int $category_id){
         if (!empty($db)) {
-            $stmt = $db->query("SELECT offers.offer_id, offers.user_id, offers.product_id, offers.price, offers.valid, offers.likes, offers.dislikes, product.name AS product_name FROM offers INNER JOIN product ON offers.product_id=product.product_id WHERE offers.shop_id=? AND offers.category_id=?;");
+            $stmt = $this->prepare("SELECT offers.offer_id, offers.user_id, offers.product_id, offers.price, offers.valid, offers.likes, offers.dislikes, product.name AS product_name FROM offers INNER JOIN product ON offers.product_id=product.product_id WHERE offers.shop_id=? AND offers.category_id=?;");
             $stmt->bind_param("ii", $shop_id, $category_id);
             $stmt->execute();
             $result = $stmt->get_result();

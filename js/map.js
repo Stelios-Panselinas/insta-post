@@ -42,21 +42,27 @@ const shopsWithoutOffersLayer = L.layerGroup();
 const selectedShopsLayer = L.layerGroup();
 
 function showAllShopsWithOffers(){
-    const xhttp = new XMLHttpRequest();
-    xhttp.onload = function () {
-        shops = JSON.parse(this.responseText);
-        mymap.removeLayer(selectedShopsLayer);
-        for (i in shops) {
-            let shop_id = shops[i].id;
-            let name = shops[i].name;
-            let lat = shops[i].latitude;
-            let log = shops[i].longtitude;
-            createPopup(shop_id, name,lat,log,0);
-        }
-    }
-    xhttp.open("POST", "selectAllShopsWithOffers.php");
-    xhttp.send();
+
+     const url = '../classes/Shop.php?function=showAllShops';
+
+    fetch(url)
+        .then(response => response.json()) // Parse the JSON response
+        .then(data => {
+            // Handle the response data here
+            mymap.removeLayer(selectedShopsLayer);
+            for (i in shops) {
+                let shop_id = shops[i].id;
+                let name = shops[i].name;
+                let lat = shops[i].latitude;
+                let log = shops[i].longtitude;
+                createPopup(shop_id, name,lat,log,0);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
 }
+
 
 
 function showShopsWithoutOffer(){
