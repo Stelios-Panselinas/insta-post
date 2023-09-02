@@ -1,14 +1,6 @@
-let mymap = L.map('mapid');
-let latit, longit;
-let myPositionMarker;
-let osmUrl='https://tile.openstreetmap.org/{z}/{x}/{y}.png';
-let osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
-let osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
-mymap.addLayer(osm);
-mymap.setView([38.245466, 21.735505], 14);
 this.showAllShopsWithOffers();
 this.showShopsWithoutOffer();
-
+const mymap = this.loadMap();
 
 var redIcon = L.icon({
     iconUrl: 'redpin.png',
@@ -21,8 +13,21 @@ var redIcon = L.icon({
 // get user position
 if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(setPosition);
-   } 
-  
+   }
+
+
+function loadMap(){
+    let mymap = L.map('mapid');
+    let latit, longit;
+    let myPositionMarker;
+    let osmUrl='https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+    let osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
+    let osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
+    mymap.addLayer(osm);
+    mymap.setView([38.245466, 21.735505], 14);
+
+    return mymap;
+}
 
 function setPosition(position){
         var markerP = L.icon({
