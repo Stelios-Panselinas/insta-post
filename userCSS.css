@@ -1,13 +1,20 @@
-{
-height: 87%;
-margin-right: unset!important;
-}
-
-.mapid {
-height: 915px;
-padding: 9px;
-@media only screen and (max-width: 768px) {
-    height: 100%;
-}
-}
-
+.main-site{
+    .row {
+        height: 87%;
+        margin-right: unset !important;
+        }
+    }
+    
+    .mapid {
+        height: 847px;
+        padding: 9px;
+        @media only screen and (max-width: 768px) {
+            height: 100%;
+        }
+    }
+    
+    .search-results{
+        border: none;
+        clip-path: inset(0 18px 0 0);
+    }
+    
