@@ -6,6 +6,17 @@ let osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a>
 let osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
 mymap.addLayer(osm);
 mymap.setView([38.245466, 21.735505], 14);
+this.showAllShopsWithOffers();
+this.showShopsWithoutOffer();
+
+
+var redIcon = L.icon({
+    iconUrl: 'redpin.png',
+
+    iconSize:     [40, 45], // size of the icon
+    iconAnchor:   [19, 41], // point of the icon which will correspond to marker's location
+    popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
+});
 
 // get user position
 if (navigator.geolocation) {
@@ -22,121 +33,76 @@ function setPosition(position){
       });
         mymap.setView([position.coords.latitude, position.coords.longitude], 16);
         myPositionMarker = L.marker([position.coords.latitude, position.coords.longitude], {icon: markerP}).addTo(mymap);
-        myPositionMarker.bindPopup(
-          `<p><b>My Market</b></p>
-        <div>
-        <div style="background-color: white;
-            width: 250px;
-            height: 300px;
-          
-            overflow: scroll;">
-          <p>Όνομα Προϊόντος
-          <p class="card-text" id="price">Τιμή:4$</p>
-          <p>Ημερομηνία Καταχώρησης: 12/11/22</p>
-          <p>Απόθεμα: ΝΑΙ</p>
-          <p>Likes: 23</p>
-          <p>Dislikes: 2</p>
-          <a href="userFeedback.html" class="btn btn-outline-success"><h6>Αξιολόγηση Προσφοράς</h6></a>
-          <br>
-          <p>Όνομα Προϊόντος
-          <p class="card-text" id="price">Τιμή:4$</p>
-          <p>Ημερομηνία Καταχώρησης: 12/11/22</p>
-          <p>Απόθεμα: ΝΑΙ</p>
-          <p>Likes: 23</p>
-          <p>Dislikes: 2</p>
-          <a href="userFeedback.html" class="btn btn-outline-success"><h6>Αξιολόγηση Προσφοράς</h6></a>
-          <br>
-          </div>
-          <a  href="offerUpload.html" class="btn btn-outline-success "><h6>Υποβολή Προσφοράς</h6></a>
-          </div>
-          <?php echo"hello"?>
-            `);
+        myPositionMarker.bindPopup("Your position");
 }
-let  shops;
-const markersLayer = L.layerGroup();
-mymap.addLayer(markersLayer);
-markersLayer.addTo(mymap);
-addAllShopsToMap("shops.geojson");
 
-async function addAllShopsToMap(file) {
-  let myObject = await fetch(file);
-  let myText = await myObject.text();
-  shops = JSON.parse(myText);
+ const shopsWithOffersLayer = L.layerGroup();
 
+const shopsWithoutOffersLayer = L.layerGroup();
 
-  var featuresLayer = new L.GeoJSON(shops, {
-    onEachFeature: function (feature, marker) {
-        marker.bindPopup(`<p><b>My Market</b></p>
-        <div>
-        <div style="background-color: white;
-            width: 250px;
-            height: 300px;
-          
-            overflow: scroll;">
-          <p>Όνομα Προϊόντος</p>
-          <p class="card-text" id="price">Τιμή:4$</p>
-          <p>Ημερομηνία Καταχώρησης: 12/11/22</p>
-          <p>Απόθεμα: ΝΑΙ</p>
-          <p>Likes: 23</p>
-          <p>Dislikes: 2</p>
-          <a href="userFeedback.html" class="btn btn-outline-success"><h6>Αξιολόγηση Προσφοράς</h6></a>
-          <br>
-          <p>Όνομα Προϊόντος
-          <p class="card-text" id="price">Τιμή:4$</p>
-          <p>Ημερομηνία Καταχώρησης: 12/11/22</p>
-          <p>Απόθεμα: ΝΑΙ</p>
-          <p>Likes: 23</p>
-          <p>Dislikes: 2</p>
-          <a href="userFeedback.html" class="btn btn-outline-success"><h6>Αξιολόγηση Προσφοράς</h6></a>
-          <br>
-          </div>
-          <a  href="offerUpload.html" class="btn btn-outline-success "><h6>Υποβολή Προσφοράς</h6></a>
-          </div>
-          <?php echo"hello"?>
-            `);
-        marker.addTo(markersLayer);
+const selectedShopsLayer = L.layerGroup();
+
+function showAllShopsWithOffers(){
+    const xhttp = new XMLHttpRequest();
+    xhttp.onload = function () {
+        shops = JSON.parse(this.responseText);
+        for (i in shops) {
+            let shop_id = shops[i].id;
+            let name = shops[i].name;
+            let lat = shops[i].latitude;
+            let log = shops[i].longtitude;
+            createPopup(shop_id, name,lat,log,0);
+        }
     }
-  });
-  featuresLayer.addTo(mymap);
-    
-  let controlSearch = new L.Control.Search({
-      position: "topright",
-      layer: featuresLayer,
-      propertyName: "name",
-      initial: false,
-      zoom: 20,
-      marker: false
-  });
-  mymap.addControl(controlSearch);
-  
+    xhttp.open("POST", "selectAllShopsWithOffers.php");
+    xhttp.send();
 }
 
+
+function showShopsWithoutOffer(){
+    const xhttp = new XMLHttpRequest();
+    xhttp.onload = function () {
+        shops = JSON.parse(this.responseText);
+        mymap.addLayer(shopsWithoutOffersLayer);
+        shopsWithoutOffersLayer.addTo(mymap);
+        mymap.removeLayer(selectedShopsLayer);
+        for (i in shops) {
+            let shop_id = shops[i].id;
+            let name;
+            if(!shops[i].name){
+                name = "Unknown"
+            }else{
+               name = shops[i].name;
+            }
+            let lat = shops[i].latitude;
+            let log = shops[i].longtitude;
+            let marker = L.marker(L.latLng([lat, log]), {title: name});
+            marker.bindPopup(name);
+            marker.addTo(shopsWithoutOffersLayer);
+        }
+    }
+    xhttp.open("POST", "selectAllshopsWithoutOffers.php");
+    xhttp.send();
+}
 function selectShops() {
     let category_id = document.getElementById("selectCategory").value;
     let shops;
-    category_id = 1;
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function () {
             shops = JSON.parse(this.responseText);
-            let selectedShopsLayer = L.layerGroup();
-            mymap.addLayer(selectedShopsLayer);
-            selectedShopsLayer.addTo(mymap);
-            mymap.removeLayer(markersLayer);
             for (i in shops) {
                 let shop_id = shops[i].id;
                 let name = shops[i].name;
                 let lat = shops[i].latitude;
                 let log = shops[i].longtitude;
-                let marker = L.marker(L.latLng([lat, log]), {title: name});
-                marker.bindPopup(createPopup(shop_id, name,lat,log));
-                marker.addTo(selectedShopsLayer);
+                createPopup(shop_id, name,lat,log,1);
                 }
             }
     xhttp.open("POST", "selectShopsByCategory.php?q=" + category_id);
     xhttp.send();
 }
 
-function createPopup(shop_id, shop_name, lat, log) {
+function createPopup(shop_id, shop_name, lat, log, isSelected) {
     let cur_offer;
     let all_offers = "";
     const xhttp = new XMLHttpRequest();
@@ -162,7 +128,7 @@ function createPopup(shop_id, shop_name, lat, log) {
             all_offers = all_offers +cur_offer;
         }
         all_offers = all_offers + `</div>`;
-        returnOffers(all_offers,lat, log);
+        showOffers(all_offers,lat, log, isSelected);
         return all_offers;
     }
     xhttp.open("POST", "getOffers.php?q=" + shop_id);
@@ -170,13 +136,21 @@ function createPopup(shop_id, shop_name, lat, log) {
 
 }
 
-function returnOffers(offers, lat, log){
-    let selectedShopsLayer = L.layerGroup();
-    mymap.addLayer(selectedShopsLayer);
-    selectedShopsLayer.addTo(mymap);
-    let marker = L.marker(L.latLng([lat, log]), {title: name});
-    marker.bindPopup(offers);
-    marker.addTo(selectedShopsLayer);
+function showOffers(offers, lat, log, isSelected){
+    let marker = L.marker(L.latLng([lat, log]), {icon: redIcon});
+    if(isSelected){
+        mymap.addLayer(selectedShopsLayer);
+        selectedShopsLayer.addTo(mymap);
+        marker.bindPopup(offers);
+        marker.addTo(selectedShopsLayer);
+        mymap.removeLayer(shopsWithOffersLayer);
+        mymap.removeLayer(shopsWithoutOffersLayer);
+    }else{
+        mymap.addLayer(shopsWithOffersLayer);
+        shopsWithOffersLayer.addTo(mymap);
+        marker.bindPopup(offers);
+        marker.addTo(shopsWithOffersLayer);
+    }
 }
 
 function storeShopID(shop_id){
