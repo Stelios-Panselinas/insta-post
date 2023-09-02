@@ -16,10 +16,10 @@ window.onload = function rateOffers() {
                     <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#btn`+i+`">Περισσότερα</button>
                     <div id="btn`+i+`" class="collapse">
                        <p>Υποβολλή από: user123456789 score 20</p>
-                       <button type="button" class="btn btn-success" id="like">LIKE</button>
+                       <button type="button" class="btn btn-success" id="like" onclick="addLike(`+offers[i].offer_id+`)">LIKE</button>
                        <button type="button" class="btn btn-danger" id="dislike">DISLIKE</button>
                        <button type="button" onclick="disableButtons()" id="out-of-stock" class="btn btn-warning">ΔΕΝ ΥΠΑΡΧΕΙ ΑΠΟΘΕΜΑ</button>
-                       <button type="button" class="btn btn-info" id="in-stock">ΞΑΝΑ ΣΕ ΑΠΟΘΕΜΑ</button>
+                       <button type="button" class="btn btn-info" id="in-stock" onclick="enableButtons()">ΞΑΝΑ ΣΕ ΑΠΟΘΕΜΑ</button>
                     </div>
               </div>
             </div>
@@ -33,6 +33,18 @@ window.onload = function rateOffers() {
 }
 
 function disableButtons() {
-    document.getElementById("like").disabled = "true";
-    document.getElementById("dislike").disabled = "true";
+    document.getElementById("like").disabled = true;
+    document.getElementById("dislike").disabled = true;
+}
+
+function enableButtons(){
+    if(document.getElementById("like").disabled && document.getElementById("dislike").disabled){
+        document.getElementById("like").disabled= false;
+        document.getElementById("dislike").disabled = false;
+    }
+
+}
+
+function addLike(offer_id){
+
 }

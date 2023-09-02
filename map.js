@@ -46,7 +46,6 @@ function showAllShopsWithOffers(){
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function () {
         shops = JSON.parse(this.responseText);
-        mymap.removeLayer(selectedShopsLayer);
         for (i in shops) {
             let shop_id = shops[i].id;
             let name = shops[i].name;
@@ -88,7 +87,6 @@ function showShopsWithoutOffer(){
 function selectShops() {
     let category_id = document.getElementById("selectCategory").value;
     let shops;
-    category_id = 1;
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function () {
             shops = JSON.parse(this.responseText);
