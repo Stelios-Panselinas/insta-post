@@ -13,7 +13,10 @@ use Offer;
         $shops = $this->getAllShops();
 
         foreach ($shops as $shop){
-            $this
+            $offers = $this->getAllOffersFromShop($shop->shop_id);
+            foreach ($offers as $offer){
+
+            }
         }
     }
 }

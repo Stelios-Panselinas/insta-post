@@ -12,8 +12,7 @@ session_start();
                 <h4 class="text-primary">Αναζήτηση βάση Κατηγορίας</h4>
                 <div class="input-group">
                     <label class="input-group-text" for="selectCategory">Κατηγορίες</label>
-                    <select class="form-select" id="selectCategory" name="category">
-                        <option selected>Επιλογή...</option>
+                    <select class="form-select" id="selectCategory" name="category" onchange="setSelected()">
                         <option value="1">Αντισυπτικά</option>
                         <option value="2">Βρεφικά Είδη</option>
                         <option value="3">Για κατοικίδια</option>
@@ -52,7 +51,7 @@ session_start();
                         <option value="4">Καθαριότητα</option>
                         <option value="5">Ποτά-Αναψυκτικά</option>
                     </select>
-                    <script src = "../js/map.js"></script>
+                    <script src = "footer_js.php"></script>
                     <button class="btn btn-primary" onclick="selectShops()" >Αναζήτηση</button>
                 </div>
             </div>
@@ -60,5 +59,3 @@ session_start();
 
     </div>
 </div>
-</body>
-</html>

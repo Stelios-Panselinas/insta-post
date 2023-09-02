@@ -3,7 +3,7 @@
 require_once 'includes/Database.php';
 require_once 'includes/PageController.php';
 
-$db = new Database();
+//$db = new Database();
 $pageController = new PageController();
 
 if(isset($_GET['page'])) {
