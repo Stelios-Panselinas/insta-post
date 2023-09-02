@@ -51,7 +51,6 @@ session_start();
                         <option value="4">Καθαριότητα</option>
                         <option value="5">Ποτά-Αναψυκτικά</option>
                     </select>
-                    <script src = "footer_js.php"></script>
                     <button class="btn btn-primary" onclick="selectShops()" >Αναζήτηση</button>
                 </div>
             </div>

@@ -6,7 +6,6 @@ class PageController {
         include('templates/header.php');
         include('templates/'.$template.'.php');
         include('templates/footer.php');
-        include('templates/footer_js.php');
     }
 
     public function renderPageHomePage($template, $data = []) {
@@ -14,6 +13,6 @@ class PageController {
 
         include('templates/'.$template.'.php');
         include('templates/footer.php');
-        include('templates/footer_js.php');
+
     }
 }
