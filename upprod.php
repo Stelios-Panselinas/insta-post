@@ -11,8 +11,9 @@
   }
  
  
-  $q = $_GET['q'];
-  $name = $_GET['name']
+  $subc = $_GET['subcategory'];
+  $name = $_GET['pname']
+  $price = $_GET['price']
   $stmt = $conn->prepare("SELECT offers.offer_id, offers.user_id, offers.product_id, offers.price, offers.valid, offers.likes, offers.dislikes, product.name AS product_name FROM offers INNER JOIN product ON offers.product_id=product.product_id WHERE offers.shop_id=?;");
   $stmt->bind_param("isd", $sub,$name,$price);
   $stmt->execute();
