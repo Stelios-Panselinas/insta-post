@@ -1,0 +1,13 @@
+{
+height: 87%;
+margin-right: unset!important;
+}
+
+.mapid {
+height: 915px;
+padding: 9px;
+@media only screen and (max-width: 768px) {
+    height: 100%;
+}
+}
+
