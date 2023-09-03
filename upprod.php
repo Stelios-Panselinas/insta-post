@@ -11,14 +11,11 @@
   }
  
  
-  $subc = $_GET['subcategory'];
-  $name = $_GET['pname']
-  $price = $_GET['price']
-  $stmt = $conn->prepare("SELECT offers.offer_id, offers.user_id, offers.product_id, offers.price, offers.valid, offers.likes, offers.dislikes, product.name AS product_name FROM offers INNER JOIN product ON offers.product_id=product.product_id WHERE offers.shop_id=?;");
-  $stmt->bind_param("isd", $sub,$name,$price);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  $offers = array();
-  $offer = array();
-  $i = 0;
+  
+  $name = $_POST['pname'];
+  $subc = $_POST['subcategory'];
+  $price = $_POST['price'];
+  $query = "INSERT INTO product (name, prod_sub_id, initial_price) VALUES ($name,$subc,$price);
+  $result = mysqli_query($conn, $query);
+  mysqli_close($conn);
 ?>
