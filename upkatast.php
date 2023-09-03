@@ -14,8 +14,8 @@
   $longt = $_POST['mikos'];
   $latit = $_POST['platos'];
   $tupos = $_POST['tname']
-  $query = "INSERT INTO shop ( latitude, longtitude, name, type ) VALUES ($latit,$longt,$kname,$tupos);
-  $result = mysqli_query($conn, $query);
-  mysqli_close($conn);
+  $sql = "INSERT INTO shop (latitude,longtitude, name, type) VALUES ($latit,$longt,$kname,$tupos);
+  mysqli_query($conn, $sql);
+
 
 ?> 
