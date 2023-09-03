@@ -1,4 +1,5 @@
 <?php
+require_once 'Database.php';
 class User extends Database {
 
     public function updateUsername($username, $user_id){
@@ -8,6 +9,14 @@ class User extends Database {
         $stmt->bind_param("si", $username, $user_id);
         $stmt->execute();
     }
+
+    public function updatePassword($user_id, $newPass){
+        $this->connect();
+
+        $stmt = $this->prepare('UPDATE user SET password = ? WHERE user_id = ?');
+        $stmt->bind_param('si', $newPass, $user_id);
+        $stmt->execute();
+    }
 }
 
 if ($_GET['function'] == "updateUsername") {
@@ -15,4 +24,9 @@ if ($_GET['function'] == "updateUsername") {
     $username = $_GET['username'];
     $user = new User();
     $user->updateUsername($username, $user_id);
+}elseif ($_GET['function'] == 'updatePassword'){
+    $user_id = 1;
+    $password = $_GET['newPass'];
+    $user = new User();
+    $user->updatePassword($user_id, $password);
 }
