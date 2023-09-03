@@ -54,12 +54,15 @@
                         <br>
                         <label for="oldpwd"><h6>Εισαγωγή Τρέχοντος Κωδικού:</h6></label>
                         <input type="password" class="form-control" id="oldpwd" placeholder="Εισαγωγή Κωδικού" name="pswd">
+                        <span id="oldPassMess" class="text-danger"></span>
                         <br>
                         <label for="newpwd"><h6>Εισαγωγή Καινούργιου Κωδικού:</h6></label>
                         <input type="password" class="form-control" id="newpwd" placeholder="Εισαγωγή Κωδικού" name="pswd">
+                        <span class="text-danger" id="validatePass"></span>
                         <br>
                         <label for="reppwd"><h6>Επανάληψη Κωδικού:</h6></label>
                         <input type="password" class="form-control" id="reppwd" placeholder="Εισαγωγή Κωδικού" name="pswd">
+                        <span class="text-danger" id="passwordMessage"></span>
                         <br>
                         <button type="button" class="btn btn-success" onclick="updatePassword()">Αλλαγή</button>
                     </div>
@@ -254,7 +257,4 @@
         </div>
         <script src = "userJS.js"></script>
     </body>
-<footer>
-
-</footer>
 </html>
