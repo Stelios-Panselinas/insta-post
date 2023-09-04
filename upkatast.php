@@ -15,7 +15,8 @@
   $latit = $_POST['platos'];
   $tupos = $_POST['tname'];
 
-  $sql = "INSERT INTO shop.latitude,shop.longtitude, shop.name, shop.type VALUES ($latit,$longt,$kname,$tupos);";
-  mysqli_query($conn, $sql);
-  
+
+  $stmt = $conn->prepare("INSERT INTO shop.latitude, shop.longtitude, shop.name, shop.type VALUES (?, ?, ?, ?);");
+  $stmt->bind_param("iiss", $latit, $longt, $kname, $tupos);
+  $stmt->execute();
 ?> 
