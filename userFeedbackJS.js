@@ -11,8 +11,8 @@ window.onload = function rateOffers() {
                     <p class="card-text" id="price">Τιμή:` + offers[i].price + `</p>
                     <p>Ημερομηνία Καταχώρησης: 12/11/22</p>
                     <p>Απόθεμα: ΝΑΙ</p>
-                    <p id="num_likes">Likes:` + offers[i].likes + `</p>
-                    <p id="num_dislikes">Dislikes: ` + offers[i].dislikes + `</p>
+                    <p id="num_likes`+offers[i].id+`">Likes:` + offers[i].likes + `</p>
+                    <p id="num_dislikes`+offers[i].id+`">Dislikes: ` + offers[i].dislikes + `</p>
                     <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#btn`+i+`">Περισσότερα</button>
                     <div id="btn`+i+`" class="collapse">
                        <p>Υποβολλή από: user123456789 score 20</p>
@@ -47,7 +47,8 @@ function enableButtons(){
 
 function addLike(offer_id,likes){
     likes++;
-    document.getElementById('num_likes').innerText= 'Likes: '+likes;
+    eleme_id = 'num_likes'+ offer_id;
+    document.getElementById(eleme_id).innerText= 'Likes: '+likes;
         const url = 'Shop.php?function=addLike&likes='+likes+'&offer_id='+offer_id;
         const xhttp = new XMLHttpRequest();
         xhttp.open("GET", url);
@@ -56,7 +57,8 @@ function addLike(offer_id,likes){
 
 function addDislike(offer_id,dislikes){
     dislikes++;
-    document.getElementById('num_dislikes').innerText = 'Dislikes: '+dislikes;
+    eleme_id = 'num_dislikes'+ offer_id;
+    document.getElementById(eleme_id).innerText = 'Dislikes: '+dislikes;
     const url = 'Shop.php?function=addDislike&dislikes='+dislikes+'&offer_id='+offer_id;
     fetch(url);
 }

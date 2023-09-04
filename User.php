@@ -34,18 +34,11 @@ class User extends Database {
         }
     }
 
-    public function showData($user_id){
-        $host = 'localhost';
-        $db_name = 'eshop';
-        $username = 'root';
-        $password = '';
-        $db = new mysqli($host, $username, $password, $db_name);;
+    public function showInteractions($user_id){
+        $this->connect();
 
-        $stmt = $db->prepare('SELECT product_name, entry_datetime, interaction FROM interactions INNER JOIN offers ON interaction.offer_id = offers.offer_id INNER JOIN product ON product.product_id = offers.product_id WHERE user_id=?');
+        $stmt = $this->prepare('SELECT name, entry_datetime, interaction FROM interactions INNER JOIN offers ON interactions.offer_id = offers.offer_id INNER JOIN product ON product.product_id = offers.product_id WHERE offers.user_id=?');
         $stmt->bind_param("i", $user_id);
-        if (!$stmt->execute()) {
-            echo("Execute failed: " . $stmt->error);
-        }
         $stmt->execute();
         $result = $stmt->get_result();
         $i = 1;
@@ -60,16 +53,63 @@ class User extends Database {
                           <tbody>";
 
         while($row = $result->fetch_assoc()){
-            $output_array = $output_array + "<tr>
-                              <td>"+$i+"</td>
-                              <td>"+$row["product_name"]+"</td>
-                              <td>"+$row["entry_datetime"]+"</td>
-                              <td>"+$row["interaction"]+"</td>
+            $output_array = $output_array."<tr>
+                              <td>".$i."</td>
+                              <td>".$row['name']."</td>
+                              <td>".$row['entry_datetime']."</td>
+                              <td>".$row['interaction']."</td>
                             </tr>";
             $i++;
         }
-        $output_array = $output_array + '</tbody>';
+        $output_array = $output_array.'</tbody>';
         echo $output_array;
+    }
+
+    public function showHistory($user_id){
+        $this->connect();
+
+        $stmt = $this->prepare('SELECT product.name AS product_name, offers.entry_daytime, shop.name AS shop_name FROM product INNER JOIN offers ON product.product_id = offers.product_id INNER JOIN shop ON shop.id = offers.shop_id WHERE offers.user_id = ?;');
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $i = 1;
+        $output_array = "<thead>
+                            <tr>
+                              <th>#</th>
+                              <th>Όνομα Προϊόντος</th>
+                              <th>Ημερομηνία Προσφοράς</th>
+                              <th>Κατάστημα</th>
+                            </tr>
+                          </thead>
+                          <tbody>";
+
+        while($row = $result->fetch_assoc()){
+            $output_array = $output_array."<tr>
+                              <td>".$i."</td>
+                              <td>".$row['product_name']."</td>
+                              <td>".$row['entry_daytime']."</td>
+                              <td>".$row['shop_name']."</td>
+                            </tr>";
+            $i++;
+        }
+        $output_array = $output_array.'</tbody>';
+        echo $output_array;
+    }
+
+    public function showRates($user_id){
+        $this->connect();
+
+        $stmt = $this->prepare("SELECT cur_tokens, total_tokens, score FROM user WHERE user_id=?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $rates = array();
+        $rate = $result->fetch_assoc();
+
+        $rates = array('cur_tokens'=>$rate['cur_tokens'], 'total_tokens'=>$rate['total_tokens'], 'score'=>$rate['score']);
+        $rates = json_encode($rates);
+
+        echo $rates;
     }
 }
 
@@ -77,20 +117,22 @@ $user = new User();
 if ($_GET['function'] == "updateUsername") {
     $user_id = 1; //$_SESSION
     $username = $_GET['username'];
-    $user = new User();
     $user->updateUsername($username, $user_id);
 }elseif ($_GET['function'] == 'updatePassword'){
     $user_id = 1;
     $password = $_GET['newPassword'];
-    $user = new User();
     $user->updatePassword($user_id, $password);
 }elseif ($_GET['function'] == 'validateOldPassword'){
     $user_id = 1;
     $oldPassword = $_GET['oldPassword'];
-    $user = new User();
     $user->validateOldPassword($oldPassword,$user_id);
-}elseif ($_GET['function'] == 'showData'){
+}elseif ($_GET['function'] == 'showInteractions'){
     $user_id = 1;
-    $user = new User();
-    $user->showData($user_id);
+    $user->showInteractions($user_id);
+}elseif ($_GET['function'] == 'showHistory'){
+    $user_id = 1;
+    $user->showHistory($user_id);
+}elseif ($_GET['function'] == 'showRates'){
+    $user_id = 1;
+    $user->showRates($user_id);
 }

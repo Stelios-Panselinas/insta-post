@@ -47,12 +47,37 @@ function updatePassword(){
         document.getElementById("passwordSuccess").textContent = "Password changed successfully.";
 }
 
-function showData(){
-    let url = 'User.php?function=showData'
+function showInteractions(){
+    let url = 'User.php?function=showInteractions'
     const xhttp = new XMLHttpRequest();
     xhttp.open("GET", url);
     xhttp.send();
     xhttp.onload = function (){
         document.getElementById('likesDislikesTable').innerHTML = this.responseText;
+    }
+    showHistory();
+}
+
+function showHistory(){
+    let url = 'User.php?function=showHistory'
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("GET", url);
+    xhttp.send();
+    xhttp.onload = function (){
+        document.getElementById('historyTable').innerHTML = this.responseText;
+    }
+    showRates();
+}
+
+function showRates(){
+    let url = 'User.php?function=showRates'
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("GET", url);
+    xhttp.send();
+    xhttp.onload = function (){
+        let rate = JSON.parse(this.responseText);
+        document.getElementById('score').innerHTML = rate.score;
+        document.getElementById('last_tokens').innerHTML = rate.cur_tokens;
+        document.getElementById('total_tokens').innerHTML = rate.total_tokens;
     }
 }
