@@ -25,6 +25,7 @@ function updatekataDatabase () {
    
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function () {
+            var katas;
             katas = JSON.parse(this.responseText);
            
         }
