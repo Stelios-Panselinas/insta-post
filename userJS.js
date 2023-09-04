@@ -10,12 +10,15 @@ function updatePassword(){
         let newPass = document.getElementById('newpwd').value;
         let oldPass = document.getElementById('oldpwd').value;
         let rePass = document.getElementById('reppwd').value;
+        document.getElementById("validatePass").innerText = "";
+        document.getElementById("passwordMessage").innerText = "";
+        document.getElementById("oldPassMess").innerText = "";
+        document.getElementById('passwordSuccess').innerText = "";
 
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function () {
-            console.log(this.responseText == 'true');
             if(this.responseText == 'true'){
-                setText();
+                document.getElementById('oldPassMess').innerText = 'Password is not correct!';
             }
         }
         xhttp.open("GET", 'User.php?function=validateOldPassword&oldPassword='+oldPass);
@@ -24,31 +27,32 @@ function updatePassword(){
         const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
 
         if (!passwordRegex.test(newPass)) {
-            alert("New password must contain at least one uppercase letter, one number, and one special character, and be at least 8 characters long.");
-            return;
+            document.getElementById('validatePass').innerText = 'New password must contain at least one uppercase letter, one number, and one special character, and be at least 8 characters long.';
+            //x return;
         }
 
         if (newPass !== rePass) {
-            document.getElementById('passwordMessage').innerText = "New password do not match with the new password!";
-            setTimeout(hideElement(), 1500);
+            document.getElementById('passwordMessage').innerText = "Passwords do not match!";
+            //setTimeout(hideElement(), 1500);
             return;
         }
 
-        // Send the current and new passwords to the server via AJAX (not shown here)
+        const url = 'User.php?function=updatePassword&newPassword='+newPass;
+        xhttp.open("GET", url);
+        xhttp.send();
 
         // Clear the form and display a success message (replace with your logic)
-        document.getElementById("currentPassword").value = "";
-        document.getElementById("newPassword").value = "";
-        document.getElementById("confirmPassword").value = "";
-        document.getElementById("passwordMessage").textContent = "Password changed successfully.";
-
+        document.getElementById("validatePass").value = "";
+        document.getElementById("passwordMessage").value = "";
+        document.getElementById("passwordSuccess").textContent = "Password changed successfully.";
 }
 
-function hideElement() {
-        document.getElementById('oldPassMess').innerText = "";
-}
-
-function setText(){
-    document.getElementById('oldPassMess').innerText = 'Password is not correct!';
-    setTimeout(hideElement(),1500);
+function showData(){
+    let url = 'User.php?function=showData'
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("GET", url);
+    xhttp.send();
+    xhttp.onload = function (){
+        document.getElementById('likesDislikesTable').innerHTML = this.responseText;
+    }
 }

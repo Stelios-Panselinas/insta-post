@@ -49,7 +49,9 @@ function addLike(offer_id,likes){
     likes++;
     document.getElementById('num_likes').innerText= 'Likes: '+likes;
         const url = 'Shop.php?function=addLike&likes='+likes+'&offer_id='+offer_id;
-        fetch(url);
+        const xhttp = new XMLHttpRequest();
+        xhttp.open("GET", url);
+        xhttp.send();
 }
 
 function addDislike(offer_id,dislikes){

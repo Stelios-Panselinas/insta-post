@@ -1,4 +1,5 @@
 <?php
+require_once 'Database.php';
 class Shop extends Database {
     public function addLike($offer_id, $likes){
         $this->connect();
