@@ -22,13 +22,15 @@ function updateDatabase() {
 }
 
 function updatekataDatabase () {
-
-    let katast_id = document.getElementById("kname").value;
-    let longt_id = document.getElementById("mikos").value;
-    let latit_id = document.getElementById("platos").value;
-    let tupos_id = document.getElementById("tname").value;
-    var xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function()
+   
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function () {
+            katas = JSON.parse(this.responseText);
+           
+        }
+        xhttp.open("POST", "upkatast.php");
+        xhttp.send();
+    
    
 
 }
