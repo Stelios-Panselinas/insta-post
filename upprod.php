@@ -15,7 +15,7 @@
   $name = $_POST['pname'];
   $subc = $_POST['subcategory'];
   $price = $_POST['price'];
-  $query = "INSERT INTO product (name, prod_sub_id, initial_price) VALUES ($name,$subc,$price);
-  $result = mysqli_query($conn, $query);
-  mysqli_close($conn);
+  $stmt = $conn->prepare("INSERT INTO  product.name, product.prod_sub_id, product.initial_price VALUES (?, ?, ?);");
+  $stmt->bind_param("sii", $pname, $subc, $price);
+  $stmt->execute();
 ?>

@@ -25,11 +25,12 @@ function updatekataDatabase () {
    
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function () {
-            var katas;
-            katas = JSON.parse(this.responseText);
-           
+            document.getElementById ("kname").value;
+            document.getElementById ("mikos").value;
+            document.getElementById ("platos").value;
+            document.getElementById ("tname").value;
         }
-        xhttp.open("POST", "upkatast.php");
+        xhttp.open("POST", "upkatast.php?kname=" + kname + "longt=" + mikos + "latit=" + platos + "tname" + tupos );
         xhttp.send();
     
    
