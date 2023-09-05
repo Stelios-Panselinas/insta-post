@@ -53,7 +53,7 @@ function showInteractions(){
     xhttp.open("GET", url);
     xhttp.send();
     xhttp.onload = function (){
-        document.getElementById('likesDislikesTable').innerHTML = this.responseText;
+        document.getElementById('likesDislikesTable').innerHTML = this.responseText;;
     }
     showHistory();
 }

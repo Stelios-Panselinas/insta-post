@@ -1,5 +1,4 @@
 this.showAllShopsWithOffers();
-this.showShopsWithoutOffer();
 const mymap = this.loadMap();
 
 var redIcon = L.icon({
@@ -24,7 +23,6 @@ function loadMap(){
     let osmAttrib='Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors';
     let osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});
     mymap.addLayer(osm);
-    mymap.setView([38.245466, 21.735505], 14);
 
     return mymap;
 }
@@ -33,12 +31,15 @@ function setPosition(position){
         var markerP = L.icon({
           iconUrl: 'icon.png',
           iconSize:     [38, 38], 
-          iconAnchor:   [1, 1], 
+          iconAnchor:   [0, 0],
           popupAnchor:  [-3, -76] 
       });
         mymap.setView([position.coords.latitude, position.coords.longitude], 16);
+        let userPos = L.latLng(position.coords.latitude, position.coords.longitude);
         myPositionMarker = L.marker([position.coords.latitude, position.coords.longitude], {icon: markerP}).addTo(mymap);
         myPositionMarker.bindPopup("Your position");
+        showShopsWithoutOffer(position.coords.latitude,position.coords.longitude);
+        showAllShopsWithOffers(position.coords.latitude,position.coords.longitude);
 }
 
  const shopsWithOffersLayer = L.layerGroup();
@@ -47,7 +48,7 @@ const shopsWithoutOffersLayer = L.layerGroup();
 
 const selectedShopsLayer = L.layerGroup();
 
-function showAllShopsWithOffers(){
+function showAllShopsWithOffers(userlat,userlon){
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function () {
         shops = JSON.parse(this.responseText);
@@ -56,7 +57,11 @@ function showAllShopsWithOffers(){
             let name = shops[i].name;
             let lat = shops[i].latitude;
             let log = shops[i].longtitude;
-            createPopup(shop_id, name,lat,log,0);
+            if(dinstance(userlat,userlon, shops[i].latitude, shops[i].longtitude)<= 0.500){
+                createPopup(shop_id, name,lat,log,0, 1);
+            }else{
+                createPopup(shop_id, name,lat,log,0, 0);
+            }
         }
     }
     xhttp.open("POST", "selectAllShopsWithOffers.php");
@@ -64,7 +69,7 @@ function showAllShopsWithOffers(){
 }
 
 
-function showShopsWithoutOffer(){
+function showShopsWithoutOffer(userlat,userlon){
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function () {
         shops = JSON.parse(this.responseText);
@@ -81,33 +86,50 @@ function showShopsWithoutOffer(){
             }
             let lat = shops[i].latitude;
             let log = shops[i].longtitude;
-            let marker = L.marker(L.latLng([lat, log]), {title: name});
-            marker.bindPopup(name);
-            marker.addTo(shopsWithoutOffersLayer);
+            let markerPosition = L.latLng([lat, log]);
+            if(dinstance(userlat,userlon, shops[i].latitude, shops[i].longtitude)<= 0.500){
+                let marker = L.marker(L.latLng([lat, log]), {title: name});
+                marker.bindPopup('<strong>'+name+'</strong><br><br><a  href="offerUpload.html" class="btn btn-outline-success "><h6>Υποβολή Προσφοράς</h6></a>');
+                marker.addTo(shopsWithoutOffersLayer);
+            }else{
+                let marker = L.marker(L.latLng([lat, log]), {title: name});
+                marker.bindPopup(name);
+                marker.addTo(shopsWithoutOffersLayer);
+            }
+
         }
     }
     xhttp.open("POST", "selectAllshopsWithoutOffers.php");
     xhttp.send();
 }
 function selectShops() {
-    let category_id = document.getElementById("selectCategory").value;
-    let shops;
-    const xhttp = new XMLHttpRequest();
-    xhttp.onload = function () {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        let userLat = position.coords.latitude;
+        let userLon = position.coords.longitude;
+
+        let category_id = document.getElementById("selectCategory").value;
+        let shops;
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function () {
             shops = JSON.parse(this.responseText);
             for (i in shops) {
                 let shop_id = shops[i].id;
                 let name = shops[i].name;
                 let lat = shops[i].latitude;
                 let log = shops[i].longtitude;
-                createPopup(shop_id, name,lat,log,1);
+                if (dinstance(userLat, userLon, shops[i].latitude, shops[i].longtitude) <= 0.500) {
+                    createPopup(shop_id, name, lat, log, 0, 1);
+                } else {
+                    createPopup(shop_id, name, lat, log, 0, 0);
                 }
             }
-    xhttp.open("POST", "selectShopsByCategory.php?q=" + category_id);
-    xhttp.send();
+        }
+            xhttp.open("POST", "selectShopsByCategory.php?q=" + category_id);
+            xhttp.send();
+    });
 }
 
-function createPopup(shop_id, shop_name, lat, log, isSelected) {
+function createPopup(shop_id, shop_name, lat, log, isSelected, inRange) {
     let cur_offer;
     let all_offers = "";
     const xhttp = new XMLHttpRequest();
@@ -118,8 +140,9 @@ function createPopup(shop_id, shop_name, lat, log, isSelected) {
             width: 250px;
             height: 330px;
             overflow: auto;">`
-        for (i in offers) {
-            cur_offer = `<p>Όνομα Προϊόντος` + offers[i].name + `</p>
+        if(inRange){
+            for (i in offers) {
+                cur_offer = `<p>Όνομα Προϊόντος` + offers[i].name + `</p>
           <p class="card-text" id="price">Τιμή:` + offers[i].price + `</p>
           <p>Ημερομηνία Καταχώρησης: 12/11/22</p>
           <p>Απόθεμα: ΝΑΙ</p>
@@ -128,11 +151,22 @@ function createPopup(shop_id, shop_name, lat, log, isSelected) {
           <a href="#" onclick="storeShopID(`+shop_id+`)" class="btn btn-outline-success"><h6>Αξιολόγηση Προσφοράς</h6></a>
           <br>
           <a  href="offerUpload.html" class="btn btn-outline-success "><h6>Υποβολή Προσφοράς</h6></a>
-          <br>`
+          <br>`;
+                all_offers = all_offers +cur_offer;
+            }
+        }else {
+            for (i in offers) {
+                cur_offer = `<p>Όνομα Προϊόντος` + offers[i].name + `</p>
+          <p class="card-text" id="price">Τιμή:` + offers[i].price + `</p>
+          <p>Ημερομηνία Καταχώρησης: 12/11/22</p>
+              <p>Απόθεμα: ΝΑΙ</p>
+              <p>Likes: ` + offers[i].likes + `</p>
+              <p>Dislikes: ` + offers[i].dislikes + `</p>
+              <br>`;
+                    all_offers = all_offers + cur_offer;
+                }
+            }
 
-            all_offers = all_offers +cur_offer;
-        }
-        all_offers = all_offers + `</div>`;
         showOffers(all_offers,lat, log, isSelected);
         return all_offers;
     }
@@ -162,4 +196,23 @@ function storeShopID(shop_id){
     localStorage.setItem('shop id', shop_id);
     window.location.href = 'userFeedback.html';
     //window.open('userFeedback.html');
+}
+
+function  dinstance(lat1, lon1, lat2, lon2) {
+    lon1 = lon1 * Math.PI / 180;
+    lat1 = lat1 * Math.PI / 180;
+    lon2 = lon2 * Math.PI / 180;
+    lat2 = lat2 * Math.PI / 180;
+
+    let dlon = lon2 - lon1;
+    let dlat = lat2 - lat1;
+    let a = Math.pow(Math.sin(dlat / 2), 2)
+        + Math.cos(lat1) * Math.cos(lat2)
+        * Math.pow(Math.sin(dlon / 2), 2);
+
+    let c = 2 * Math.asin(Math.sqrt(a));
+
+    let r = 6371;
+
+    return (c * r);
 }

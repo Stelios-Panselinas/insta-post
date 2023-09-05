@@ -21,7 +21,7 @@
 
 
   while($row = $result->fetch_assoc()){
-    $shops[$i] = array('id'=>$row['id'], 'name'=>$row['name'], 'latitude'=>$row['latitude'], 'longtitude'=>$row['longtitude']);
+    $shops[$i] = array('id'=>$row['id'], 'name'=>$row['name'], 'latitude'=>$row['latitude'], 'longitude'=>$row['longtitude']);
     $i++; 
   }
   $shops = json_encode($shops);
