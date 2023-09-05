@@ -22,15 +22,17 @@ function updateDatabase() {
 }
 
 function updatekataDatabase () {
-   
-        const xhttp = new XMLHttpRequest();
+            
+         let kname =   document.getElementById ("kname").value;
+         let longt =   document.getElementById ("mikos").value;
+         let latit =   document.getElementById ("platos").value;
+         let tupos =   document.getElementById ("tname").value;
+        
+            const xhttp = new XMLHttpRequest();
         xhttp.onload = function () {
-            document.getElementById ("kname").value;
-            document.getElementById ("mikos").value;
-            document.getElementById ("platos").value;
-            document.getElementById ("tname").value;
+           
         }
-        xhttp.open("POST", "upkatast.php?kname=" + kname + "longt=" + mikos + "latit=" + platos + "tname" + tupos );
+        xhttp.open("POST", "upkatast.php?kname=" + kname + "longt=" + longt + "latit=" + latit + "tupos=" + tupos );
         xhttp.send();
     
    

@@ -11,9 +11,9 @@
   }
   
   $kname = $_POST['kname'];
-  $longt = $_POST['mikos'];
-  $latit = $_POST['platos'];
-  $tupos = $_POST['tname'];
+  $longt = $_POST['longt'];
+  $latit = $_POST['latit'];
+  $tupos = $_POST['tupos'];
 
 
   $stmt = $conn->prepare("INSERT INTO shop.latitude, shop.longtitude, shop.name, shop.type VALUES (?, ?, ?, ?);");
