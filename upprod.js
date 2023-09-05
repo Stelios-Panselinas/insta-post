@@ -32,7 +32,7 @@ function updatekataDatabase () {
         xhttp.onload = function () {
            
         }
-        xhttp.open("POST", "upkatast.php?kname=" + kname + "longt=" + longt + "latit=" + latit + "tupos=" + tupos );
+        xhttp.open("POST", "upkatast.php?kname=" + kname + "&longt=" + longt + "&latit=" + latit + "&tupos=" + tupos );
         xhttp.send();
     
    

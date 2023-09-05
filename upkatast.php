@@ -10,13 +10,13 @@
     die("Connection failed: " . $conn->connect_error);
   }
   
-  $kname = $_POST['kname'];
-  $longt = $_POST['longt'];
-  $latit = $_POST['latit'];
-  $tupos = $_POST['tupos'];
+  $kname = $_GET['kname'];
+  $longt = (double)$_GET['longt'];
+  $latit = (double)$_GET['latit'];
+  $tupos = $_GET['tupos'];
 
 
-  $stmt = $conn->prepare("INSERT INTO shop.latitude, shop.longtitude, shop.name, shop.type VALUES (?, ?, ?, ?);");
-  $stmt->bind_param("iiss", $latit, $longt, $kname, $tupos);
+  $stmt = $conn->prepare("INSERT INTO shop (shop.id, shop.latitude, shop.longtitude, shop.name, shop.type) VALUES (DEFAULT, ?, ?, ?, ?);");
+  $stmt->bind_param("ddss", $latit, $longt, $kname, $tupos);
   $stmt->execute();
 ?> 
