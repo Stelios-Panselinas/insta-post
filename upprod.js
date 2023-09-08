@@ -1,5 +1,5 @@
 
-function updateDatabase() {
+function productupdate() {
     
     let pname = document.getElementById("pname").value;
     let subCategory = document.getElementById("subCategory").value;
@@ -7,10 +7,10 @@ function updateDatabase() {
 
     const xhttp = new XMLHttpRequest();
         xhttp.onload = function () {
-
+        }
             xhttp.open("POST", "upprod.php?pname=" + pname + "&subCategory=" + subCategory + "&price=" + price );
         xhttp.send();
-         }
+
 }
 
 function updatekataDatabase () {
