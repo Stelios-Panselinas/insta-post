@@ -12,17 +12,17 @@
   
 
 
-  $sql = "SELECT first_name, last_name, cur_tokens, total_tokens FROM user ORDER BY total_tokens";
+  $sql = "SELECT first_name, last_name, cur_tokens, total_tokens FROM user ORDER BY total_tokens desc ";
   $result = $conn->query($sql);
   
   
   if ($result->num_rows > 0) {
   
-  $i = -9;
-  $output_array;
+  $i = 0;
+  $output_array = '';
 
   while($row = $result->fetch_assoc()){
-      $output_array = "<tr>
+    $output_array = $output_array."<tr>
                         <td>".$i."</td>
                         <td>".$row['first_name']. " " . $row['last_name'] ."</td>
                         <td>".$row['cur_tokens']."</td>
@@ -30,7 +30,7 @@
                       </tr>";
       $i++;
   }
-  echo $output_array;
+    echo $output_array;
 
 } else {
   echo "0 results";
