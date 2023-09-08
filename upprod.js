@@ -1,24 +1,17 @@
 
 function updateDatabase() {
     
-    let product_id= document.getElementById("pname").value;
-    let subcategory_id = document.getElementById("subCategory").value;
-    let price_id= document.getElementById("price").value;
+    let pname = document.getElementById("pname").value;
+    let subCategory = document.getElementById("subCategory").value;
+    let price = document.getElementById("price").value;
 
-    fetch('upprod.php', {
-        method: 'POST',
-        body: JSON.stringify({ data: product_id,subcategory_id,price_id }),
-        headers: {
-            'Content-Type': 'application/json'
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function () {
+           
         }
-    })
-    .then(response => response.text())
-    .then(data => {
-        alert(data); 
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
+        xhttp.open("POST", "upprod.php?pname=" + pname + "&subCategory=" + subCategory + "&price=" + price );
+        xhttp.send();
+    
 }
 
 function updatekataDatabase () {
