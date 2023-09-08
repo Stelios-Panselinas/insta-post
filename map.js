@@ -14,7 +14,6 @@ if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(setPosition);
    }
 
-
 function loadMap(){
     let mymap = L.map('mapid');
     let latit, longit;
@@ -42,7 +41,7 @@ function setPosition(position){
         showAllShopsWithOffers(position.coords.latitude,position.coords.longitude);
 }
 
- const shopsWithOffersLayer = L.layerGroup();
+const shopsWithOffersLayer = L.layerGroup();
 
 const shopsWithoutOffersLayer = L.layerGroup();
 
@@ -64,10 +63,9 @@ function showAllShopsWithOffers(userlat,userlon){
             }
         }
     }
-    xhttp.open("POST", "selectAllShopsWithOffers.php");
+    xhttp.open("GET", "Shop.php?function=getAllShopsWithOffers");
     xhttp.send();
 }
-
 
 function showShopsWithoutOffer(userlat,userlon){
     const xhttp = new XMLHttpRequest();
@@ -99,9 +97,10 @@ function showShopsWithoutOffer(userlat,userlon){
 
         }
     }
-    xhttp.open("POST", "selectAllshopsWithoutOffers.php");
+    xhttp.open("POST", "Shop.php?function=getAllShopsWithoutOffers");
     xhttp.send();
 }
+
 function selectShops() {
     navigator.geolocation.getCurrentPosition(function(position) {
         let userLat = position.coords.latitude;
@@ -116,15 +115,15 @@ function selectShops() {
                 let shop_id = shops[i].id;
                 let name = shops[i].name;
                 let lat = shops[i].latitude;
-                let log = shops[i].longtitude;
+                let log = shops[i].longitude;
                 if (dinstance(userLat, userLon, shops[i].latitude, shops[i].longtitude) <= 0.500) {
-                    createPopup(shop_id, name, lat, log, 0, 1);
+                    createPopup(shop_id, name, lat, log, 1, 1);
                 } else {
-                    createPopup(shop_id, name, lat, log, 0, 0);
+                    createPopup(shop_id, name, lat, log, 1, 0);
                 }
             }
         }
-            xhttp.open("POST", "selectShopsByCategory.php?q=" + category_id);
+            xhttp.open("POST", "Shop.php?function=getAllShopsWithOffersCategory&category_id" + category_id);
             xhttp.send();
     });
 }
@@ -167,7 +166,7 @@ function createPopup(shop_id, shop_name, lat, log, isSelected, inRange) {
                 }
             }
 
-        showOffers(all_offers,lat, log, isSelected);
+        showOffers(all_offers,parseFloat(lat), parseFloat(log), isSelected);
         return all_offers;
     }
     xhttp.open("POST", "getOffers.php?q=" + shop_id);
@@ -176,19 +175,19 @@ function createPopup(shop_id, shop_name, lat, log, isSelected, inRange) {
 }
 
 function showOffers(offers, lat, log, isSelected){
-    let marker = L.marker(L.latLng([lat, log]), {icon: redIcon});
+    let mymarker = L.marker([lat, log], {icon: redIcon});
     if(isSelected){
         mymap.addLayer(selectedShopsLayer);
         selectedShopsLayer.addTo(mymap);
-        marker.bindPopup(offers);
-        marker.addTo(selectedShopsLayer);
+        mymarker.bindPopup(offers);
+        mymarker.addTo(selectedShopsLayer);
         mymap.removeLayer(shopsWithOffersLayer);
         mymap.removeLayer(shopsWithoutOffersLayer);
     }else{
         mymap.addLayer(shopsWithOffersLayer);
         shopsWithOffersLayer.addTo(mymap);
-        marker.bindPopup(offers);
-        marker.addTo(shopsWithOffersLayer);
+        mymarker.bindPopup(offers);
+        mymarker.addTo(shopsWithOffersLayer);
     }
 }
 
