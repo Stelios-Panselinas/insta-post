@@ -19,18 +19,14 @@
   if ($result->num_rows > 0) {
   
   $i = 0;
-  $output_array = '';
+  $output_array = array();
 
   while($row = $result->fetch_assoc()){
-    $output_array = $output_array."<tr>
-                        <td>".$i."</td>
-                        <td>".$row['first_name']. " " . $row['last_name'] ."</td>
-                        <td>".$row['cur_tokens']."</td>
-                        <td>".$row['total_tokens']."</td>
-                      </tr>";
-      $i++;
+    $output_array[$i] = array('first_name'=>$row['first_name']. " " . $row['last_name'], 'cur_tokens'=>$row['cur_tokens'], 'total_tokens'=>$row['total_tokens'] );
+                           
+    $i++;
   }
-    echo $output_array;
+    echo json_encode ($output_array);
 
 } else {
   echo "0 results";
