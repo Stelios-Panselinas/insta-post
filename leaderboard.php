@@ -12,18 +12,27 @@
   
 
 
-  $sql = "SELECT user_id, first_name, cur_tokens, total_tokens FROM user ORDER BY total tokens";
+  $sql = "SELECT first_name, last_name, cur_tokens, total_tokens FROM user ORDER BY total_tokens";
   $result = $conn->query($sql);
-
+  
+  
   if ($result->num_rows > 0) {
+  
+  $i = -9;
+  $output_array;
 
-    // output data of each row
-    while($row = $result->fetch_assoc()) {
-      echo "<tr><td>" .$row["user_id"]. "</td><td>" .$row["first_name"]. "</td><td>" .$row["cur_tokens"]."</td><td>" .$row["total_tokens"]. "</td></tr>";
-    }
-  } else {
-    echo "0 results";
+  while($row = $result->fetch_assoc()){
+      $output_array = "<tr>
+                        <td>".$i."</td>
+                        <td>".$row['first_name']. " " . $row['last_name'] ."</td>
+                        <td>".$row['cur_tokens']."</td>
+                        <td>".$row['total_tokens']."</td>
+                      </tr>";
+      $i++;
   }
-  $conn->close();
+  echo $output_array;
 
+} else {
+  echo "0 results";
+}
 ?> 
