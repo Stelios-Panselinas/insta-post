@@ -12,10 +12,10 @@
  
  
   
-  $name = $_POST['pname'];
-  $subc = $_POST['subcategory'];
-  $price = $_POST['price'];
-  $stmt = $conn->prepare("INSERT INTO  product.name, product.prod_sub_id, product.initial_price VALUES (?, ?, ?);");
-  $stmt->bind_param("sii", $pname, $subc, $price);
+  $pname = $_GET['pname'];
+  $subCategory = $_GET['subCategory'];
+  $price = (double)$_GET['price'];
+  $stmt = $conn->prepare("INSERT INTO product (product.product_id, product.name, product.prod_sub_id, product.initial_price ) VALUES ( DEFAULT, ?, ?, ?);");
+  $stmt->bind_param("sid", $pname, $subCategory, $price);
   $stmt->execute();
 ?>
