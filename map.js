@@ -1,6 +1,8 @@
 this.showAllShopsWithOffers();
 const mymap = this.loadMap();
 
+mymap.setView([38.232389, 21.747326], 16);
+
 var redIcon = L.icon({
     iconUrl: 'redpin.png',
 
@@ -31,7 +33,7 @@ function setPosition(position){
           iconUrl: 'icon.png',
           iconSize:     [38, 38], 
           iconAnchor:   [0, 0],
-          popupAnchor:  [-3, -76] 
+          popupAnchor:  [16, 0]
       });
         mymap.setView([position.coords.latitude, position.coords.longitude], 16);
         let userPos = L.latLng(position.coords.latitude, position.coords.longitude);
@@ -102,11 +104,11 @@ function showShopsWithoutOffer(userlat,userlon){
 }
 
 function selectShops() {
-    navigator.geolocation.getCurrentPosition(function(position) {
-        let userLat = position.coords.latitude;
-        let userLon = position.coords.longitude;
+     navigator.geolocation.getCurrentPosition(function(position) {
+         let userLat = position.coords.latitude;
+         let userLon = position.coords.longitude;
 
-        let category_id = document.getElementById("selectCategory").value;
+        let category_id = parseInt(document.getElementById("selectCategory").value);
         let shops;
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function () {
@@ -123,7 +125,7 @@ function selectShops() {
                 }
             }
         }
-            xhttp.open("POST", "Shop.php?function=getAllShopsWithOffersCategory&category_id" + category_id);
+            xhttp.open("POST", "Shop.php?function=getAllShopsWithOffersCategory&category_id=" + category_id);
             xhttp.send();
     });
 }

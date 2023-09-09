@@ -58,7 +58,6 @@ class Shop extends Database {
 
         $result = $this->query("SELECT DISTINCT shop.name,shop.id, shop.latitude, shop.longtitude FROM shop INNER JOIN offers ON shop.id=offers.shop_id;");
         $shops = array();
-        $shop = array();
         $i = 0;
 
 
