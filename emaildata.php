@@ -10,11 +10,12 @@
     }
 
     $email = $_GET['email'];
-    $password = $_GET['[password'];
-    $sql = "SELECT email FROM user WHERE email=? ";
+    $password=$_GET['password'];
+
+    $sql = "SELECT password FROM user WHERE email=? ";
     $stmt = $conn->prepare($sql);
-    $stmt->execute();
-    $result = $conn->get_results();
+    $stmt->$execute($sql);
+    $result = $conn->query($sql);
     
     if ($conn->query($sql) === TRUE) {
         echo "To email υπαρχει.";
