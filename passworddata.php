@@ -15,10 +15,10 @@ $last_name = $_GET['last_name'];
 $email = $_GET['email'];
 
 
-    $sql = ("INSERT into user (first_name, last_name, password) Values (?, ?, ?);");
+    $sql = ("INSERT into user (first_name, last_name, password, email) Values (?, ?, ?, ?);");
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('ssss', $first_name, $last_name, $password, $email);
-    $stmt->$execute($sql);
+    $stmt->execute();
     $result = $conn->query($sql);
     
     if ($conn->query($sql) === TRUE) {

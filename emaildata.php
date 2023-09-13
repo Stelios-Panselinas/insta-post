@@ -9,10 +9,12 @@
         die("Connection Failed: ") . $conn->connect_error;
     }
 
+    $email = $_GET['email'];
+    $password = $_GET['[password'];
     $sql = "SELECT email FROM user WHERE email=? ";
     $stmt = $conn->prepare($sql);
-    $stmt->$execute($sql);
-    $result = $conn->query($sql);
+    $stmt->execute();
+    $result = $conn->get_results();
     
     if ($conn->query($sql) === TRUE) {
         echo "To email υπαρχει.";

@@ -33,13 +33,11 @@ let validated = true
         validated =false;
     }
 
-    
-    return true;
-
+console.log(validated);
     if(validated){
         const xhttp = new XMLHttpRequest();
-    XMLHttpRequest.OPEN("GET", "passworddata.php?password="+password+"&first_name="+first_name+"&last_name="+last_name+"&email="+email );
-    XMLHttpRequest.send();
+    xhttp.open("GET", "passworddata.php?password="+password+"&first_name="+first_name+"&last_name="+last_name+"&email="+email );
+    xhttp.send();
     XMLHttpRequest.onload = function() {
         document.getElementById("passworddata").innerHTML = this.responseText;
     }
