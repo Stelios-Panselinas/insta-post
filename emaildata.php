@@ -4,7 +4,7 @@
     $password= "";
     $dname = "eshop";
     
-    $conn = new mysqli($servername, $username, $password, $dname);
+    $conn = new mysqli($username, $password, $dname);
     if ($conn->connect_error) {
         die("Connection Failed: ") . $conn->connect_error;
     }
@@ -14,15 +14,17 @@
 
     $sql = "SELECT password FROM user WHERE email=? ";
     $stmt = $conn->prepare($sql);
-    $stmt->$execute($sql);
-    $result = $conn->query($sql);
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $passwordDB = $result->fetch_assoc();
     
-    if ($conn->query($sql) === TRUE) {
-        echo "To email υπαρχει.";
-        
+    if ($password === $passwordDB) {
+        $_SESSION->start();
+        $_SESSION['email'] = $email;
+        $_SESSION['user_id'] = $user_id;
     } else {
-        echo "Το email δεν υπαρχει.";
-        
+
     } 
 
     $conn=null
