@@ -15,14 +15,14 @@
   </div>
 
   <div class="container-md">
-    <div class="row justify-content-center">
-      <div class="col-12 w-50">
+    <div class="row" style="width: 50%;">
+      <div class="col-md">
         <form action="/action_page.php" method="post">
-        <label for="uname"><h6>Email</h6></label>
+        <label for="uname"><h6>Όνομα Χρήστη</h6></label>
         <input type="email" class="form-control" id="email" placeholder="Εισαγωγή Email" name="email">
 
-        <label for="psw"><b>Κωδικός</b></label>
-        <input type="password" class="form-control" id="psw" placeholder="Εισαγωγή Κωδικού" name="psw">
+        <label for="password"><b>Κωδικός</b></label>
+        <input type="password" class="form-control" id="password" placeholder="Εισαγωγή Κωδικού" name="password">
         <br>
         <input type="button" class="btn btn-success" value="Σύνδεση">
         <label class="form-check-label">
@@ -32,6 +32,8 @@
           <a href="εγγραφή.html.">Eγγραφή </a>
 
           <script src="email.js"></script>
+          
+          <button class="btn btn-success" onclick="isEmailValid()"> Σύνδεση</button>
           
         </div>
          
