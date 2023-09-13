@@ -10,9 +10,14 @@
     }
 
 $password=$_GET['password'];
+$first_name = $_GET['first_name'];
+$last_name = $_GET['last_name'];
+$email = $_GET['email'];
 
-    $sql = "INSERT first_name, last_name, FROM user";
+
+    $sql = ("INSERT into user (first_name, last_name, password) Values (?, ?, ?);");
     $stmt = $conn->prepare($sql);
+    $stmt->bind_param('ssss', $first_name, $last_name, $password, $email);
     $stmt->$execute($sql);
     $result = $conn->query($sql);
     

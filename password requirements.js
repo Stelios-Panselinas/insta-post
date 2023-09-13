@@ -38,7 +38,7 @@ let validated = true
 
     if(validated){
         const xhttp = new XMLHttpRequest();
-    XMLHttpRequest.OPEN("GET", "passworddata.php?password"+password+"&first_name="+first_name+"&last_name="+last_name+"&email="+email );
+    XMLHttpRequest.OPEN("GET", "passworddata.php?password="+password+"&first_name="+first_name+"&last_name="+last_name+"&email="+email );
     XMLHttpRequest.send();
     XMLHttpRequest.onload = function() {
         document.getElementById("passworddata").innerHTML = this.responseText;
