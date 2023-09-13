@@ -30,24 +30,24 @@ function displayTablePage() {
 
 }
 
-  document.getElementById('prevPage').addEventListener('click', () => {
-    if (currentPage > 1) {
-      currentPage--;
-      displayTablePage();
-    }
-  });
+            document.getElementById('prevPage').addEventListener('click', () => {
+            if (currentPage > 1) {
+                                     currentPage--;
+                                     displayTablePage();
+                                   }
+                                  });
   
   // Event listener for the "Next" button
-  document.getElementById('nextPage').addEventListener('click', () => {
-    if (currentPage < Math.ceil(tableData.length / itemsPerPage)) {
-      currentPage++;
-      displayTablePage();
-    }
-  });
+            document.getElementById('nextPage').addEventListener('click', () => {
+               if (currentPage < Math.ceil(tableData.length / itemsPerPage)) {
+                   currentPage++;
+                    displayTablePage();
+                    }
+                   });
   
   // Initial display of the first page
-  displayTablePage();
-    //document.getElementById('leaderboard').innerHTML = this.responseText;
+              displayTablePage();
+    
     
     } 
 
