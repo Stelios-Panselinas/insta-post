@@ -14,9 +14,9 @@ if(!empty($_SESSION['logged_in'])) {
 
 $data = [];
 if($page === 'login'){
-    $pageController->renderLoginPage($page, $data);
+    $pageController->renderPageNoHeader($page, $data);
 }else{
-    $pageController->renderPage($page, $data);
+    $pageController->renderPageNoHeader($page, $data);
 }
 
 //switch($page) {

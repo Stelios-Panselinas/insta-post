@@ -17,16 +17,15 @@
   <div class="container-md">
     <div class="row justify-content-center">
       <div class="col-12 w-50">
-          <?php echo form_open('home/login');?>
-          <div class="form-group"
+        <form action="emaildata.php" method="get">
         <label for="uname"><h6>Email</h6></label>
         <input type="email" class="form-control" id="email" placeholder="Εισαγωγή Email" name="email">
-      </div>
+
         <label for="password"><b>Κωδικός</b></label>
         <input type="password" class="form-control" id="password" placeholder="Εισαγωγή Κωδικού" name="password">
           <span class="text-danger" id="loggin-message"></span>
         <br>
-        <input type="button" class="btn btn-success" onclick="isEmailValid()" value="Σύνδεση">
+        <input type="submit" class="btn btn-success"  value="Σύνδεση">
         <div>
           <a href="register.php" >Eγγραφή </a>
 
@@ -35,7 +34,6 @@
         </div>
          
       </form>
-        <?php echo validation_errors();?>
       </div>
     </div>
   </div>
