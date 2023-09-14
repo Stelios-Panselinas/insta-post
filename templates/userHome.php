@@ -17,9 +17,6 @@
                 <a type="button" href="userSearch" class="btn btn-primary"><h3>Αναζήτηση Προϊόντων</h3></a>
                 <br>
                 <br>
-                <a type="button" class="btn btn-primary"><h3>Κατάταξη</h3></a>
-                <br>
-                <br>
                 <a type="button" href="userProfile" class="btn btn-primary"><h3>Επεξεργασία Προφιλ</h3></a>
                 <br>
                 <br>

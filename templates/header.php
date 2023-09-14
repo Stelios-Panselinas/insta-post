@@ -31,9 +31,6 @@
                             <a class="nav-link" href="userSearch"><h5>Αναζήτηση Προϊόντος</h5></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="leaderboards"><h5>Πίνακας Κατάταξης</h5></a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link" href="userProfile"><h5>Επεξεργασία Προφίλ</h5></a>
                         </li>
                         <li class="nav-item">
