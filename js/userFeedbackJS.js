@@ -31,8 +31,3 @@ window.onload = function rateOffers() {
     xhttp.send();
 
 }
-
-function disableButtons() {
-    document.getElementById("like").disabled = "true";
-    document.getElementById("dislike").disabled = "true";
-}
