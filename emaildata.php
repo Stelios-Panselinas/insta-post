@@ -1,4 +1,6 @@
 <?php
+require_once 'includes/PageController.php';
+$pageController = new PageController();
     $host = 'localhost';
     $db_name = 'eshop';
     $username = 'root';
@@ -23,6 +25,8 @@
         $_SESSION['email'] = $email;
         $_SESSION['user_id'] = $userData['user_id'];
         $_SESSION['logged_in'] = true;
+        $data = [];
+        $pageController->renderPage('userHome', $data);
     }else{
         echo 'Invalid email or password!';
     }

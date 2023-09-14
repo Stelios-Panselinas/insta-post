@@ -6,15 +6,15 @@ require_once 'includes/PageController.php';
 //$db = new Database();
 $pageController = new PageController();
 
-if(isset($_GET['page'])) {
-    $page = $_GET['page'];
-} else {
+if(!empty($_SESSION['logged_in'])) {
     $page = 'userHome';
+} else {
+    $page = 'login';
 }
 
 $data = [];
-if($page === 'userHome'){
-    $pageController->renderPageHomePage($page, $data);
+if($page === 'login'){
+    $pageController->renderLoginPage($page, $data);
 }else{
     $pageController->renderPage($page, $data);
 }

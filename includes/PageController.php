@@ -8,7 +8,7 @@ class PageController {
         include('templates/footer.php');
     }
 
-    public function renderPageHomePage($template, $data = []) {
+    public function renderLoginPage($template, $data = []) {
         extract($data);
 
         include('templates/'.$template.'.php');

@@ -17,23 +17,25 @@
   <div class="container-md">
     <div class="row justify-content-center">
       <div class="col-12 w-50">
-        <form action="/action_page.php" method="post">
+          <?php echo form_open('home/login');?>
+          <div class="form-group"
         <label for="uname"><h6>Email</h6></label>
         <input type="email" class="form-control" id="email" placeholder="Εισαγωγή Email" name="email">
-
+      </div>
         <label for="password"><b>Κωδικός</b></label>
         <input type="password" class="form-control" id="password" placeholder="Εισαγωγή Κωδικού" name="password">
           <span class="text-danger" id="loggin-message"></span>
         <br>
         <input type="button" class="btn btn-success" onclick="isEmailValid()" value="Σύνδεση">
         <div>
-          <a href="εγγραφή.html" >Eγγραφή </a>
+          <a href="register.php" >Eγγραφή </a>
 
           <script src="email.js"></script>
           
         </div>
          
       </form>
+        <?php echo validation_errors();?>
       </div>
     </div>
   </div>
