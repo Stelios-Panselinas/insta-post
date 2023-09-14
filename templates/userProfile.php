@@ -7,31 +7,6 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     </head>
     <body>
-
-        <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-            <div class="container-fluid" style="padding: 20px;">
-              <a class="navbar-brand" href="userHome.html"><h3 class="display-6">InstaPost</h3></a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link" href="userSearch.html"><h5>Αναζήτηση Προϊόντος</h5></a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="leaderboards.html"><h5>Πίνακας Κατάταξης</h5></a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="userProfile.html"><h5>Επεξεργασία Προφίλ</h5></a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#"><h5>Αποσύνδεση</h5></a>
-                  </li>    
-                </ul>
-              </div>
-            </div>
-          </nav>
         
 
         <div class="container" style="padding: 10px;">
