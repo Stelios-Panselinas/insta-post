@@ -32,129 +32,70 @@
                     </div>
         </div>
             <span class="navbar-text">ADMIN PAGE-Admin use only</span>
-    </nav>
+         </nav>
     
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     
-    <br>
-    <br>
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-md-6" style="padding-left: 110px; padding-top: 110px;">
-                
-                <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
+  
+      
+        <div>
+        <canvas id="myChart"></canvas>
+        <input type="month" onchange="filterChart(this)"/>
+         </div>
+      
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
+      
     
-              <script>
-                var xValues ;
-                var yValues = [55, 49, 44, 24, 15];
-             
-    
-                 new Chart("myChart", {
-                type: "bar",
-                data: {
-                labels: xValues,
-                datasets: [{
-                backgroundColor: barColors,
-                data: yValues
-                 }]
-                },
-                 options: {
-                 legend: {display: false},
-                title: {
-                 display: true,
-                text: "Προσφορές ανά Μήνα"
+            <script>
+        const ctx = document.getElementById('myChart');
+      
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+            datasets: [{
+              label: 'Πλήθος Προσφορών ανά ημέρα',
+              data: [12, 19, 3, 5, 2, 3],
+              borderWidth: 1
+            }]
+          },
+          options: {
+            scales: {
+              x: {
+                min: '2023-01-01',
+                max: '2023-12-31',
+                type: 'time',
+                time: {
+                  unit: 'day'  
                 }
-                }
-                });
-              </script>
-                <form> 
-                    <br>
-                    <div class="input-group" style="width:40%;">
-                        <label class="input-group-text" for="inputGroupSelect01">Έτος</label>
-                         <select class="form-select" id="inputGroupSelect01">
-                            <option selected>Επιλογή...</option>
-                            <option value="1">2021</option>
-                            <option value="2">2022</option>
-                            <option value="3">2023</option>
-                         </select>
-                    </div>
-                </form>
-                <br>
-                <form>
-                    <div class="input-group" style="width:40%;">
-                     <label class="input-group-text" for="inputGroupSelect01">Μήνας</label>
-                        <select class="form-select" id="inputGroupSelect01">
-                         <option selected>Επιλογή...</option>
-                         <option value="1">Ιανουάριος</option>
-                         <option value="2">Φεβρουάριος</option>
-                         <option value="3">Μάρτιος</option> 
-                         <option value="4">Απρίλιος</option>
-                         <option value="5">Μάιος</option>
-                         <option value="6">Ιούνιος</option>
-                         <option value="7">Ιούλιος</option>
-                         <option value="8">Αύγουστος</option>
-                         <option value="9">Σεπτέμβριος</option>
-                         <option value="10">Οκτώβριος</option>
-                         <option value="11">Νοέμβριος</option>
-                         <option value="12">Δεκέμβριος</option>
-                        </select>
-                    </div>
-                </form>   
-            </div>
-            <div class="col-md-6" style="padding: 110px;">
-                <canvas id="myChart2" style="width:100%;max-width:600px"></canvas>
-    
-                <script>
-                    var xValues = ["Δευτέρα", "Τρίτη", "Τετάρτη", "Πέμπτη", "Παρασκευή","Σάββατο","Κυριακή"];
-                    var yValues = [100, 49, 44, 24, 15];
-                    
-    
-                    new Chart("myChart2", {
-                        type: "bar",
-                      data: {
-                        labels: xValues,
-                        datasets: [{
-                          backgroundColor: barColors,
-                          data: yValues
-                         }]
-                          },
-                          options: {
-                            legend: {display: false},
-                            title: {
-                             display: true,
-                          text: "Μέσος Όρος Εκπτώσεων"
-                         }
-                          }
-                    });
-                </script>
-                <form> 
-                    <br>
-                    <div class="input-group" style="width:50%;">
-                        <label class="input-group-text" for="inputGroupSelect01">Κατηγορία</label>
-                         <select class="form-select" id="inputGroupSelect01">
-                            <option selected>Επιλογή...</option>
-                            <option value="1">Λαχανικα</option>
-                            <option value="2">2021</option>
-                            <option value="3">2022</option>
-                         </select>
-                    </div>
-                </form>
-                <br>
-                <form>
-                    <div class="input-group" style="width:50%;">
-                     <label class="input-group-text" for="inputGroupSelect01">Υποκατηγορία</label>
-                        <select class="form-select" id="inputGroupSelect01">
-                         <option selected>Επιλογή...</option>
-                         <option value="1">Ιανουάριος</option>
-                         <option value="2">Φεβρουάριος</option>
-                         <option value="3">Μάρτιος</option>
-                        </select>
-                    </div>
-                </form>   
-            </div>
-        </div>  
-               
-    </div>
+
+              },  
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+
+
+        const myChart = new Chart (
+            document.getElementById('myChart'),
+            config
+        );
+
+
+        function filterChart(date) {
+             console.log(date.value);
+             const year = date.value.substring(0, 4);
+             const month = date.value.substring(5, 7);
+
+             myChart.config.options
+
+        }
+     
+          </script>      
+            
     </body>
 </html>  
   
