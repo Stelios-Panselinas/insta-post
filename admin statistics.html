@@ -47,65 +47,8 @@
         <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
       
     
-            <script>
-        const ctx = document.getElementById('myChart');
-      
-         const myChart = new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-            datasets: [{
-              label: 'Πλήθος Προσφορών ανά ημέρα',
-              data: [12, 19, 3, 5, 2, 3],
-              borderWidth: 1
-            }]
-          },
-          options: {
-            scales: {
-              x: {
-                min: '2023-01-01',
-                max: '2023-12-31',
-                type: 'time',
-                time: {
-                  unit: 'day'  
-                }
-
-              },  
-              y: {
-                beginAtZero: true
-              }
-            }
-          }
-        });
-
-
-        
-        
-
-        function filterChart(date) {
-
-          
-
-             console.log(date.value);
-             const year = date.value.substring(0, 4);
-             const month = date.value.substring(5, 7);
-             console.log(month);
-             
-             
-             const lastDay = (y, m) => {
-              return new Date(y, m, 0).getDate()
-             };
-
-
-             const startDate = `${date.value}-01`;
-             const endDate = `${date.value}-${lastDay(year,month)}`;
-
-             myChart.config.options.scales.x.min = startDate;
-             myChart.config.options.scales.x.max = endDate;
-             myChart.update();
-        }
-     
-          </script>      
+            <script src='statistics.js'></script>
+            
             
     </body>
 </html>  
