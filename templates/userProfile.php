@@ -1,35 +1,3 @@
-<html>
-    <head>
-        <title>Επεξεργασία Προφίλ</title>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-    </head>
-    <body onload="showInteractions()">
-
-        <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
-            <div class="container-fluid" style="padding: 20px;">
-              <a class="navbar-brand" href="userHome.html"><h3 class="display-6">InstaPost</h3></a>
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link" href="userSearch.html"><h5>Αναζήτηση Προϊόντος</h5></a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="userProfile.html"><h5>Επεξεργασία Προφίλ</h5></a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#"><h5>Αποσύνδεση</h5></a>
-                  </li>    
-                </ul>
-              </div>
-            </div>
-          </nav>
-
 
         <div class="container" style="padding: 10px;">
             <div class="row">
@@ -69,10 +37,10 @@
                     <h3>Ιστορικό Αλληλεπιδράσεων</h3>
                     <div class="table-responsive" >
                         <table class="table table-bordered" id="likesDislikesTable"></table>
-                      </div>
+                    </div>
                 </div>
 
-                <div class="col-md-4" style="padding: 15px;">
+                <div class="col-md-4 history-table">
                     <h3>Ιστορικό Προσφορών</h3>
                         <div class="table-responsive">
                             <table class="table table-bordered" id="historyTable"></table>
@@ -86,6 +54,4 @@
                 </div>
             </div>
         </div>
-        <script src = "userJS.js"></script>
-    </body>
-</html>
+        <script src="../js/userJS.js"></script>

@@ -17,7 +17,7 @@
                 <div class="col-md-8" style="padding: 10px;">
                     <h4>Συμπλήρωση Στοιχείων Προϊόντος</h4>
                     <br>
-                    <form>
+                    <form action="../classes/Offer.php" method="get">
                         <h5>Επιλογή Κατηγορίας:</h5>
                         <select class="form-select mt-3" id="category" onchange="sub()">
                             <option value="0">Επιλέξτε Κατηγορία</option>
@@ -40,14 +40,14 @@
                         <h5>Προσθήκη Τιμής:</h5>
                         <input type="text" class="form-control" placeholder="Τιμή..." id="price">
                         <p id="text"></p>
+                        <input type="submit" class="btn btn-success" value="Υποβολή Προσφοράς">
                         </form>
                 </div>
                 
             </div>
             <div class="row" style="width:50% ;">
                 <br>
-                <button type="button" class="btn btn-success" onclick="submit()">Υποβολή Προσφοράς</button>
+
             </div>         
         </div>
-    </body>
-</html>
+    <script src="../js/offer.js"></script>

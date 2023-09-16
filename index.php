@@ -1,22 +1,27 @@
 <?php
-// index.php
+
+session_start();
+
 require_once 'includes/Database.php';
 require_once 'includes/PageController.php';
 
 //$db = new Database();
 $pageController = new PageController();
 
-if(!empty($_SESSION['logged_in'])) {
-    $page = 'userHome';
+
+if (isset($_SESSION['userData']['logged_in'])) {
+    $page = $_GET['page'];
 } else {
     $page = 'login';
 }
 
+
+
 $data = [];
-if($page === 'login'){
+if($page === 'login' || $page === 'userHome'){
     $pageController->renderPageNoHeader($page, $data);
 }else{
-    $pageController->renderPageNoHeader($page, $data);
+    $pageController->renderPage($page, $data);
 }
 
 //switch($page) {

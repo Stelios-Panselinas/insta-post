@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once 'Database.php';
 class User extends Database {
 
@@ -115,24 +116,24 @@ class User extends Database {
 
 $user = new User();
 if ($_GET['function'] == "updateUsername") {
-    $user_id = 1; //$_SESSION
+    $user_id = $_SESSION['userData']['user_id']; //$_SESSION
     $username = $_GET['username'];
     $user->updateUsername($username, $user_id);
 }elseif ($_GET['function'] == 'updatePassword'){
-    $user_id = 1;
+    $user_id = $_SESSION['userData']['user_id'];
     $password = $_GET['newPassword'];
     $user->updatePassword($user_id, $password);
 }elseif ($_GET['function'] == 'validateOldPassword'){
-    $user_id = 1;
+    $user_id = $_SESSION['userData']['user_id'];
     $oldPassword = $_GET['oldPassword'];
     $user->validateOldPassword($oldPassword,$user_id);
 }elseif ($_GET['function'] == 'showInteractions'){
-    $user_id = 1;
+    $user_id = $_SESSION['userData']['user_id'];
     $user->showInteractions($user_id);
 }elseif ($_GET['function'] == 'showHistory'){
-    $user_id = 1;
+    $user_id = $_SESSION['userData']['user_id'];
     $user->showHistory($user_id);
 }elseif ($_GET['function'] == 'showRates'){
-    $user_id = 1;
+    $user_id = $_SESSION['userData']['user_id'];
     $user->showRates($user_id);
 }

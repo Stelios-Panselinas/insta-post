@@ -1,3 +1,10 @@
+<?php
+
+if (!isset($_SESSION['userData']['logged_in'])) {
+    header("Location: login");
+}
+?>
+
 <html>
     <head>
         <title>Αξιολόγηση Προσφοράς</title>
@@ -24,7 +31,7 @@
                 <br>
                 <br>
                 <br>
-                <a type="button" href="#" class="btn btn-primary"><h4>Αποσύνδεση</h4></a>
+                <a type="button" href="logout" class="btn btn-primary"><h4>Αποσύνδεση</h4></a>
             </div>
         </div>
     </body>

@@ -15,12 +15,4 @@ class PageController {
         include('templates/footer.php');
 
     }
-
-    public function renderHomePage($template, $data = []) {
-        extract($data);
-
-        include('templates/'.$template.'.php');
-        include('templates/footer.php');
-
-    }
 }

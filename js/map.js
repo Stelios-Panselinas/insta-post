@@ -1,20 +1,39 @@
-this.showAllShopsWithOffers();
 const mymap = this.loadMap();
+const shopsWithOffersLayer = L.layerGroup();
+const shopsWithoutOffersLayer = L.layerGroup();
+const selectedShopsLayer = L.layerGroup();
+showShopsWithoutOffer(38.246264, 21.735001);
+showAllShopsWithOffers(38.246264, 21.735001);
 
-mymap.setView([38.232389, 21.747326], 16);
 
-var redIcon = L.icon({
-    iconUrl: 'redpin.png',
 
-    iconSize:     [40, 45], // size of the icon
-    iconAnchor:   [19, 41], // point of the icon which will correspond to marker's location
-    popupAnchor:  [0, -40] // point from which the popup should open relative to the iconAnchor
+mymap.setView([38.246264, 21.735001], 16);
+
+const redIcon = L.icon({
+    iconUrl: '../img/redpin.png',
+
+    iconSize:     [40, 45],
+    iconAnchor:   [19, 41],
+    popupAnchor:  [0, -40]
 });
 
+const markerP = L.icon({
+    iconUrl: '../img/icon.png',
+    iconSize:     [38, 38],
+    iconAnchor:   [0, 0],
+    popupAnchor:  [16, 0]
+});
+myPositionMarker = L.marker([38.246264, 21.735001], {icon: markerP}).addTo(mymap);
+myPositionMarker.bindPopup("Your position");
 // get user position
-if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(setPosition);
-   }
+// if (navigator.geolocation) {
+//     navigator.geolocation.getCurrentPosition(setPosition);
+// }else{
+//     showShopsWithoutOffer(38.246264, 21.735001);
+//     showAllShopsWithOffers(38.246264, 21.735001);
+//     myPositionMarker = L.marker([38.246264, 21.735001], {icon: markerP}).addTo(mymap);
+//     myPositionMarker.bindPopup("Your position");
+// }
 
 function loadMap(){
     let mymap = L.map('mapid');
@@ -29,25 +48,13 @@ function loadMap(){
 }
 
 function setPosition(position){
-        var markerP = L.icon({
-          iconUrl: 'icon.png',
-          iconSize:     [38, 38], 
-          iconAnchor:   [0, 0],
-          popupAnchor:  [16, 0]
-      });
-        mymap.setView([position.coords.latitude, position.coords.longitude], 16);
-        let userPos = L.latLng(position.coords.latitude, position.coords.longitude);
-        myPositionMarker = L.marker([position.coords.latitude, position.coords.longitude], {icon: markerP}).addTo(mymap);
-        myPositionMarker.bindPopup("Your position");
-        showShopsWithoutOffer(position.coords.latitude,position.coords.longitude);
-        showAllShopsWithOffers(position.coords.latitude,position.coords.longitude);
+    mymap.setView([position.coords.latitude, position.coords.longitude], 16);
+    let userPos = L.latLng(position.coords.latitude, position.coords.longitude);
+    myPositionMarker = L.marker([position.coords.latitude, position.coords.longitude], {icon: markerP}).addTo(mymap);
+    myPositionMarker.bindPopup("Your position");
+    showShopsWithoutOffer(position.coords.latitude,position.coords.longitude);
+    showAllShopsWithOffers(position.coords.latitude,position.coords.longitude);
 }
-
-const shopsWithOffersLayer = L.layerGroup();
-
-const shopsWithoutOffersLayer = L.layerGroup();
-
-const selectedShopsLayer = L.layerGroup();
 
 function showAllShopsWithOffers(userlat,userlon){
     const xhttp = new XMLHttpRequest();
@@ -57,15 +64,15 @@ function showAllShopsWithOffers(userlat,userlon){
             let shop_id = shops[i].id;
             let name = shops[i].name;
             let lat = shops[i].latitude;
-            let log = shops[i].longtitude;
-            if(dinstance(userlat,userlon, shops[i].latitude, shops[i].longtitude)<= 0.500){
-                createPopup(shop_id, name,lat,log,0, 1);
+            let log = shops[i].longitude;
+            if(dinstance(userlat,userlon, shops[i].latitude, shops[i].longitude)<= 0.500){
+                createPopup(shop_id, name,lat,log,0, 1, 0);
             }else{
-                createPopup(shop_id, name,lat,log,0, 0);
+                createPopup(shop_id, name,lat,log,0, 0, 0);
             }
         }
     }
-    xhttp.open("GET", "Shop.php?function=getAllShopsWithOffers");
+    xhttp.open("GET", "../classes/Shop.php?function=getAllShopsWithOffers");
     xhttp.send();
 }
 
@@ -82,7 +89,7 @@ function showShopsWithoutOffer(userlat,userlon){
             if(!shops[i].name){
                 name = "Unknown"
             }else{
-               name = shops[i].name;
+                name = shops[i].name;
             }
             let lat = shops[i].latitude;
             let log = shops[i].longtitude;
@@ -99,14 +106,14 @@ function showShopsWithoutOffer(userlat,userlon){
 
         }
     }
-    xhttp.open("POST", "Shop.php?function=getAllShopsWithoutOffers");
+    xhttp.open("POST", "../classes/Shop.php?function=getAllShopsWithoutOffers");
     xhttp.send();
 }
 
 function selectShops() {
-     navigator.geolocation.getCurrentPosition(function(position) {
-         let userLat = position.coords.latitude;
-         let userLon = position.coords.longitude;
+    selectedShopsLayer.clearLayers();
+        let userLat = 38.246264;
+        let userLon = 21.735001;
 
         let category_id = parseInt(document.getElementById("selectCategory").value);
         let shops;
@@ -118,19 +125,19 @@ function selectShops() {
                 let name = shops[i].name;
                 let lat = shops[i].latitude;
                 let log = shops[i].longitude;
-                if (dinstance(userLat, userLon, shops[i].latitude, shops[i].longtitude) <= 0.500) {
-                    createPopup(shop_id, name, lat, log, 1, 1);
+                if (dinstance(userLat, userLon, shops[i].latitude, shops[i].longitude) <= 0.500) {
+                    createPopup(shop_id, name, lat, log, 1, 1, category_id);
                 } else {
-                    createPopup(shop_id, name, lat, log, 1, 0);
+                    createPopup(shop_id, name, lat, log, 1, 0, category_id);
                 }
             }
         }
-            xhttp.open("POST", "Shop.php?function=getAllShopsWithOffersCategory&category_id=" + category_id);
-            xhttp.send();
-    });
+        xhttp.open("POST", "../classes/Shop.php?function=getAllShopsWithOffersCategory&category_id=" + category_id);
+        xhttp.send();
+
 }
 
-function createPopup(shop_id, shop_name, lat, log, isSelected, inRange) {
+function createPopup(shop_id, shop_name, lat, log, isSelected, inRange, category_id) {
     let cur_offer;
     let all_offers = "";
     const xhttp = new XMLHttpRequest();
@@ -151,7 +158,7 @@ function createPopup(shop_id, shop_name, lat, log, isSelected, inRange) {
           <p>Dislikes: ` + offers[i].dislikes + `</p>
           <a href="#" onclick="storeShopID(`+shop_id+`)" class="btn btn-outline-success"><h6>Αξιολόγηση Προσφοράς</h6></a>
           <br>
-          <a  href="offerUpload.html" class="btn btn-outline-success "><h6>Υποβολή Προσφοράς</h6></a>
+          <a  href="offerUpload" class="btn btn-outline-success "><h6>Υποβολή Προσφοράς</h6></a>
           <br>`;
                 all_offers = all_offers +cur_offer;
             }
@@ -164,16 +171,15 @@ function createPopup(shop_id, shop_name, lat, log, isSelected, inRange) {
               <p>Likes: ` + offers[i].likes + `</p>
               <p>Dislikes: ` + offers[i].dislikes + `</p>
               <br>`;
-                    all_offers = all_offers + cur_offer;
-                }
+                all_offers = all_offers + cur_offer;
             }
+        }
 
         showOffers(all_offers,parseFloat(lat), parseFloat(log), isSelected);
         return all_offers;
     }
-    xhttp.open("POST", "getOffers.php?q=" + shop_id);
-    xhttp.send();
-
+        xhttp.open("POST", "../classes/Shop.php?function=getOffersFromCategory&category_id=" + category_id+"&shop_id="+shop_id);
+        xhttp.send();
 }
 
 function showOffers(offers, lat, log, isSelected){
@@ -195,7 +201,7 @@ function showOffers(offers, lat, log, isSelected){
 
 function storeShopID(shop_id){
     localStorage.setItem('shop id', shop_id);
-    window.location.href = 'userFeedback.html';
+    window.location.href = 'userFeedback';
     //window.open('userFeedback.html');
 }
 

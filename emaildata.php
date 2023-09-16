@@ -21,12 +21,14 @@ $pageController = new PageController();
     $result = $stmt->get_result();
     $userData = $result->fetch_assoc();
     if(!empty($userData) && $userData['password'] == $password){
+        $userData = array(
+            'email'=>$email,
+            'user_id'=>$userData['user_id'],
+            'logged_in'=>true);
         session_start();
-        $_SESSION['email'] = $email;
-        $_SESSION['user_id'] = $userData['user_id'];
-        $_SESSION['logged_in'] = true;
+        $_SESSION['userData'] = $userData;
         $data = [];
-        $pageController->renderPage('userHome', $data);
+        header("Location: userHome");
     }else{
         echo 'Invalid email or password!';
     }

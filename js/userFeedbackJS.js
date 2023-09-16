@@ -3,7 +3,7 @@ window.onload = function rateOffers() {
     const xhttp = new XMLHttpRequest();
     xhttp.onload = function () {
         let offers = JSON.parse(this.responseText);
-        let all_offers;
+        let all_offers = '';
         for (i in offers) {
             all_offers = all_offers+`<div class="card shadow p-4 mb-4">
                 <div class="card-body">
@@ -27,7 +27,7 @@ window.onload = function rateOffers() {
         }
         document.getElementById('main-body').innerHTML = all_offers;
     }
-    xhttp.open("POST", "getOffers.php?q=" + shop_id);
+    xhttp.open("POST", "Shop.php?function=getOffersFromCategory&category_id=0&shop_id="+shop_id);
     xhttp.send();
 
 }
