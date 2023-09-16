@@ -50,8 +50,8 @@
             <script>
         const ctx = document.getElementById('myChart');
       
-        new Chart(ctx, {
-          type: 'bar',
+         const myChart = new Chart(ctx, {
+          type: 'line',
           data: {
             labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
             datasets: [{
@@ -79,19 +79,30 @@
         });
 
 
-        const myChart = new Chart (
-            document.getElementById('myChart'),
-            config
-        );
-
+        
+        
 
         function filterChart(date) {
+
+          
+
              console.log(date.value);
              const year = date.value.substring(0, 4);
              const month = date.value.substring(5, 7);
+             console.log(month);
+             
+             
+             const lastDay = (y, m) => {
+              return new Date(y, m, 0).getDate()
+             };
 
-             myChart.config.options
 
+             const startDate = `${date.value}-01`;
+             const endDate = `${date.value}-${lastDay(year,month)}`;
+
+             myChart.config.options.scales.x.min = startDate;
+             myChart.config.options.scales.x.max = endDate;
+             myChart.update();
         }
      
           </script>      
