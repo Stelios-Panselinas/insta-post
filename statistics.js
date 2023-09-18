@@ -53,3 +53,10 @@ const ctx = document.getElementById('myChart');
              myChart.config.options.scales.x.max = endDate;
              myChart.update();
         }
+
+        const xhttp = new XMLHttpRequest();
+
+        xhttp.open("GET", "statistcs.php?startDate=" + startDate + "endDate=" + endDate );
+        xhttp.send(); 
+
+
