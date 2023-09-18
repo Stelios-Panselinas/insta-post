@@ -15,15 +15,24 @@ window.onload = function rateOffers() {
                     <p id="num_dislikes`+offers[i].id+`">Dislikes: ` + offers[i].dislikes + `</p>
                     <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#btn`+i+`">Περισσότερα</button>
                     <div id="btn`+i+`" class="collapse">
-                       <p>Υποβολλή από: `+offers[i].first_name+ ` `+offers[i].last_name+` <br>score: `+offers[i].score+`</p>
-                       <button type="button" class="btn btn-success" id="like" onclick="addLike(`+offers[i].id+`,`+offers[i].likes+`)">LIKE</button>
-                       <button type="button" class="btn btn-danger" id="dislike" onclick="addDislike(`+offers[i].id+`,`+offers[i].dislikes+`)">DISLIKE</button>
-                       <button type="button" onclick="disableButtons(`+i+`)" id="out-of-stock`+i+`" class="btn btn-warning">ΔΕΝ ΥΠΑΡΧΕΙ ΑΠΟΘΕΜΑ</button>
-                       <button type="button" class="btn btn-info" id="in-stock`+i+`" onclick="enableButtons(`+i+`)">ΞΑΝΑ ΣΕ ΑΠΟΘΕΜΑ</button>
-                    </div>
+                       <p>Υποβολλή από: `+offers[i].first_name+ ` `+offers[i].last_name+` <br>score: `+offers[i].score+`</p>`;
+            if(offers[i].valid === 1){
+                all_offers = all_offers+`<button type="button" class="btn btn-success" id="like`+offers[i].id+`" onclick="addLike(`+offers[i].id+`,`+offers[i].likes+`)">LIKE</button>
+                       <button type="button" class="btn btn-danger" id="dislike`+offers[i].id+`" onclick="addDislike(`+offers[i].id+`,`+offers[i].dislikes+`)">DISLIKE</button>
+                       <button type="button" onclick="disableButtons(`+offers[i].id+`)" id="out-of-stock`+offers[i].id+`" class="btn btn-warning">ΔΕΝ ΥΠΑΡΧΕΙ ΑΠΟΘΕΜΑ</button>
+                       <button type="button" class="btn btn-info" id="in-stock`+i+`" onclick="enableButtons(`+offers[i].id+`)">ΞΑΝΑ ΣΕ ΑΠΟΘΕΜΑ</button></div>
               </div>
             </div>
             <br>`
+            }else {
+                all_offers = all_offers+`<button type="button" class="btn btn-success" id="like`+offers[i].id+`" onclick="addLike(`+offers[i].id+`,`+offers[i].likes+`)" disabled>LIKE</button>
+                       <button type="button" class="btn btn-danger" id="dislike`+offers[i].id+`" onclick="addDislike(`+offers[i].id+`,`+offers[i].dislikes+`)" disabled>DISLIKE</button>
+                       <button type="button" onclick="disableButtons(`+offers[i].id+`)" id="out-of-stock`+offers[i].id+`" class="btn btn-warning" disabled>ΔΕΝ ΥΠΑΡΧΕΙ ΑΠΟΘΕΜΑ</button>
+                       <button type="button" class="btn btn-info" id="in-stock`+i+`" onclick="enableButtons(`+offers[i].id+`)">ΞΑΝΑ ΣΕ ΑΠΟΘΕΜΑ</button></div>
+              </div>
+            </div>
+            <br>`
+            }
         }
         document.getElementById('main-body').innerHTML = all_offers;
     }
@@ -32,15 +41,25 @@ window.onload = function rateOffers() {
 
 }
 
-function disableButtons(i) {
-    document.getElementById("like"+i).disabled = true;
-    document.getElementById("dislike"+i).disabled = true;
+function disableButtons(offer_id) {
+    document.getElementById("like"+offer_id).disabled = true;
+    document.getElementById("dislike"+offer_id).disabled = true;
+    document.getElementById('out-of-stock'+offer_id).disabled = true;
+    const url = '../classes/Shop.php?function=disableOffer&offer_id='+offer_id;
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("GET", url);
+    xhttp.send();
 }
 
-function enableButtons(i){
-    if(document.getElementById("like"+i).disabled && document.getElementById("dislike").disabled){
-        document.getElementById("like"+i).disabled= false;
-        document.getElementById("dislike"+i).disabled = false;
+function enableButtons(offer_id){
+    if(document.getElementById("like"+offer_id).disabled && document.getElementById("dislike"+offer_id).disabled){
+        document.getElementById("like"+offer_id).disabled= false;
+        document.getElementById("dislike"+offer_id).disabled = false;
+        document.getElementById('out-of-stock'+offer_id).disabled = false;
+        const url = '../classes/Shop.php?function=enableOffer&offer_id='+offer_id;
+        const xhttp = new XMLHttpRequest();
+        xhttp.open("GET", url);
+        xhttp.send();
     }
 
 }

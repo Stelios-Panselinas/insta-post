@@ -95,6 +95,22 @@ class Shop extends Database {
         $offers = json_encode($offers);
         echo $offers;
     }
+
+    public function disableOffer($offer_id){
+        $this->connect();
+
+        $stmt = $this->prepare("UPDATE offers SET valid = 0 WHERE offer_id = ?");
+        $stmt->bind_param("i", $offer_id);
+        $stmt->execute();
+    }
+
+    public function enableOffer($offer_id){
+        $this->connect();
+
+        $stmt = $this->prepare("UPDATE offers SET valid = 1 WHERE offer_id = ?");
+        $stmt->bind_param("i", $offer_id);
+        $stmt->execute();
+    }
 }
 
 $shop = new Shop();
@@ -117,6 +133,12 @@ if ($_GET['function'] == "addLike") {
     $category_id = (int)$_GET['category_id'];
     $shop_id = (int)$_GET['shop_id'];
     $shop->getOffersFromCategory($category_id, $shop_id);
+}elseif ($_GET['function'] === 'disableOffer'){
+    $offer_id = $_GET['offer_id'];
+    $shop->disableOffer($offer_id);
+}elseif ($_GET['function'] === 'enableOffer'){
+    $offer_id = $_GET['offer_id'];
+    $shop->enableOffer($offer_id);
 }
 
 
