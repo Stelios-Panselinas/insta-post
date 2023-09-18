@@ -47,16 +47,24 @@ class Offer extends Database {
     public function productFill($subcategory_id){
         $this->connect();
 
-        $stmt = $this->prepare("SELECT product.name FROM product INNER JOIN subcategory ON product.prod_sub_id=subcategory.sub_id WHERE subcategory.name LIKE ?");
+        $stmt = $this->prepare("SELECT product.product_id, product.name FROM product INNER JOIN subcategory ON product.prod_sub_id=subcategory.sub_id WHERE subcategory.name LIKE ?");
         $stmt->bind_param("s", $subcategory_id);
         $stmt->execute();
         $result = $stmt->get_result();
         echo "<option value=0".">"."Επιλέξτε Προϊόν"."</option>";
         $val = 1;
         while ($row = $result->fetch_assoc()) {
-            echo "<option value=".$val.">".$row['name']."</option>";
+            echo "<option value=".$row['product_id'].">".$row['name']."</option>";
             $val++;
         }
+    }
+
+    public function uploadOffer($category_id, $subcategory_id, $product_id, $shop_id,$price){
+        $this->connect();
+
+        $stmt = $this->prepare("INSERT INTO offers (offer_id,shop_id,category_id,sub_id,product_id,price,valid,user_id,likes,dislikes,entry_daytime) VALUES (DEFAULT, ?,?,?,?,?,1,?,0,0,NOW())");
+        $stmt->bind_param("iiiidi", $shop_id,$category_id,$subcategory_id,$product_id,$price,$_SESSION['userData']['user_id']);
+        $stmt->execute();
     }
 }
 
@@ -74,5 +82,12 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     } elseif ($_GET['function'] === 'productFill') {
         $subcategory_id = $_GET['subcategory_id'];
         $offer->productFill($subcategory_id);
+    }elseif ($_GET['function'] === 'uploadOffer'){
+        $category_id = $_GET['category_id'];
+        $subcategory_id = $_GET['subcategory_id'];
+        $product_id = $_GET['product_id'];
+        $shop_id = $_GET['shop_id'];
+        $price = (float)$_GET['price'];
+        $offer->uploadOffer($category_id,$subcategory_id,$product_id,$shop_id,$price);
     }
 }

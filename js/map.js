@@ -158,7 +158,7 @@ function createPopup(shop_id, shop_name, lat, log, isSelected, inRange, category
           <p>Dislikes: ` + offers[i].dislikes + `</p>
           <a href="#" onclick="storeShopID(`+shop_id+`)" class="btn btn-outline-success"><h6>Αξιολόγηση Προσφοράς</h6></a>
           <br>
-          <a  href="offerUpload" class="btn btn-outline-success "><h6>Υποβολή Προσφοράς</h6></a>
+          <a  href="offerUpload" onclick="storeShopID(`+shop_id+`)" class="btn btn-outline-success "><h6>Υποβολή Προσφοράς</h6></a>
           <br>`;
                 all_offers = all_offers +cur_offer;
             }

@@ -52,10 +52,26 @@ function prod(){
 }
 
 function submit(){
+    var shop_id = localStorage.getItem('shop id');
     let element = document.getElementById("category");
     let category_id = element.value;
     element = document.getElementById("subcategory");
     let subcategory_id = element.value;
     element = document.getElementById("products");
-    let product = element.options[element.selectedIndex].text;
+    let product_id = element.options[element.selectedIndex].value;
+    let price = parseFloat(document.getElementById('price').value);
+
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("GET", "../classes/Offer.php?function=uploadOffer&category_id="+category_id+"&subcategory_id="+subcategory_id+"&product_id="+product_id+"&shop_id="+shop_id+"&price="+price);
+    xhttp.send();
+    xhttp.onload = function (){
+        element = document.getElementById("category");
+        element.value = 0;
+        element = document.getElementById("subcategory");
+        element.value = 0;
+        element = document.getElementById("products");
+        element.value = 0;
+    }
 }
+
+
