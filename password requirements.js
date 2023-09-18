@@ -28,19 +28,15 @@ let validated = true
     }
 
     
-    if (!/[#$*&@]/.test(password)) {
+    if (!/[!#$*&@]/.test(password)) {
         document.getElementById("symbol").innerText="Το password πρέπει να περιέχει τουλάχιστον ένα σύμβολο (π.χ. #$*&@).";
         validated =false;
     }
 
-console.log(validated);
     if(validated){
         const xhttp = new XMLHttpRequest();
     xhttp.open("GET", "passworddata.php?password="+password+"&first_name="+first_name+"&last_name="+last_name+"&email="+email );
     xhttp.send();
-    XMLHttpRequest.onload = function() {
-        document.getElementById("passworddata").innerHTML = this.responseText;
-    }
     }
 }
 

@@ -11,14 +11,16 @@ $pageController = new PageController();
 
 if (isset($_SESSION['userData']['logged_in'])) {
     $page = $_GET['page'];
-} else {
+} elseif($_GET['page'] === 'register.php') {
+    $page = 'register';
+}else{
     $page = 'login';
 }
 
 
 
 $data = [];
-if($page === 'login' || $page === 'userHome'){
+if($page === 'login' || $page === 'userHome' || $page === 'register'){
     $pageController->renderPageNoHeader($page, $data);
 }else{
     $pageController->renderPage($page, $data);

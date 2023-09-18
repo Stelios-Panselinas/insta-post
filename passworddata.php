@@ -19,15 +19,17 @@ $email = $_GET['email'];
     $stmt = $conn->prepare($sql);
     $stmt->bind_param('ssss', $first_name, $last_name, $password, $email);
     $stmt->execute();
-    $result = $conn->query($sql);
-    
-    if ($conn->query($sql) === TRUE) {
-        echo "Ο κωδικός είναι έγκυρος.";
-        
-    } else {
-        echo "Ο κωδικός δεν είναι έγκυρος.";
-        
-    } 
+
+    $
+
+$userData = array(
+    'email'=>$email,
+    'user_id'=>$userData['user_id'],
+    'logged_in'=>true);
+session_start();
+$_SESSION['userData'] = $userData;
+$data = [];
+header("Location: userHome");
 
     $conn = null;
 ?>
