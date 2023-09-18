@@ -72,14 +72,14 @@ class Shop extends Database {
     public function getOffersFromCategory($category_id, $shop_id){
         $this->connect();
         if ($category_id === 0){
-            $stmt = $this->prepare("SELECT offers.offer_id, offers.user_id, offers.product_id, offers.price, offers.valid, offers.likes, offers.dislikes, product.name AS product_name, user.first_name, user.last_name, user.score FROM offers INNER JOIN product ON offers.product_id=product.product_id INNER JOIN user ON user.user_id = offers.user_id WHERE offers.shop_id=?;");
+            $stmt = $this->prepare("SELECT offers.offer_id, offers.user_id, offers.product_id, offers.price, offers.valid, offers.likes, offers.dislikes, offers.entry_daytime, product.name AS product_name, user.first_name, user.last_name, user.score FROM offers INNER JOIN product ON offers.product_id=product.product_id INNER JOIN user ON user.user_id = offers.user_id WHERE offers.shop_id=?;");
             $stmt->bind_param("i", $shop_id);
             $stmt->execute();
             $result = $stmt->get_result();
             $offers = array();
             $i = 0;
         }else{
-            $stmt = $this->prepare("SELECT offers.offer_id, offers.user_id, offers.product_id, offers.price, offers.valid, offers.likes, offers.dislikes, product.name AS product_name, user.first_name, user.last_name, user.score FROM offers INNER JOIN product ON offers.product_id=product.product_id INNER JOIN user ON user.user_id = offers.user_id WHERE offers.shop_id=?;");
+            $stmt = $this->prepare("SELECT offers.offer_id, offers.user_id, offers.product_id, offers.price, offers.valid, offers.likes, offers.dislikes, offers.entry_daytime, product.name AS product_name, user.first_name, user.last_name, user.score FROM offers INNER JOIN product ON offers.product_id=product.product_id INNER JOIN user ON user.user_id = offers.user_id WHERE offers.shop_id=?;");
             $stmt->bind_param("ii", $shop_id, $category_id);
             $stmt->execute();
             $result = $stmt->get_result();
@@ -89,7 +89,7 @@ class Shop extends Database {
 
 
         while($row = $result->fetch_assoc()){
-            $offers[$i] = array('id'=>$row['offer_id'], 'user_id'=>$row['user_id'], 'product_id'=>$row['product_id'], 'price'=>$row['price'], 'valid'=>$row['valid'],'likes'=>$row['likes'],'dislikes'=>$row['dislikes'],'name'=>$row['product_name'],'first_name'=>$row['first_name'],'last_name'=>$row['last_name'],'score'=>$row['score']);
+            $offers[$i] = array('id'=>$row['offer_id'], 'user_id'=>$row['user_id'], 'product_id'=>$row['product_id'], 'price'=>$row['price'], 'valid'=>$row['valid'],'likes'=>$row['likes'],'dislikes'=>$row['dislikes'],'entry_daytime'=>$row['entry_daytime'],'name'=>$row['product_name'],'first_name'=>$row['first_name'],'last_name'=>$row['last_name'],'score'=>$row['score']);
             $i++;
         }
         $offers = json_encode($offers);

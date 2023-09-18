@@ -9,7 +9,7 @@ window.onload = function rateOffers() {
                 <div class="card-body">
                     <h4 class="card-title">` + offers[i].name + `</h4>
                     <p class="card-text" id="price">Τιμή:` + offers[i].price + `</p>
-                    <p>Ημερομηνία Καταχώρησης: 12/11/22</p>
+                    <p>Ημερομηνία Καταχώρησης: `+offers[i].entry_daytime+`</p>
                     <p>Απόθεμα: ΝΑΙ</p>
                     <p id="num_likes`+offers[i].id+`">Likes:` + offers[i].likes + `</p>
                     <p id="num_dislikes`+offers[i].id+`">Dislikes: ` + offers[i].dislikes + `</p>
@@ -18,8 +18,8 @@ window.onload = function rateOffers() {
                        <p>Υποβολλή από: `+offers[i].first_name+ ` `+offers[i].last_name+` <br>score: `+offers[i].score+`</p>
                        <button type="button" class="btn btn-success" id="like" onclick="addLike(`+offers[i].id+`,`+offers[i].likes+`)">LIKE</button>
                        <button type="button" class="btn btn-danger" id="dislike" onclick="addDislike(`+offers[i].id+`,`+offers[i].dislikes+`)">DISLIKE</button>
-                       <button type="button" onclick="disableButtons()" id="out-of-stock" class="btn btn-warning">ΔΕΝ ΥΠΑΡΧΕΙ ΑΠΟΘΕΜΑ</button>
-                       <button type="button" class="btn btn-info" id="in-stock" onclick="enableButtons()">ΞΑΝΑ ΣΕ ΑΠΟΘΕΜΑ</button>
+                       <button type="button" onclick="disableButtons(`+i+`)" id="out-of-stock`+i+`" class="btn btn-warning">ΔΕΝ ΥΠΑΡΧΕΙ ΑΠΟΘΕΜΑ</button>
+                       <button type="button" class="btn btn-info" id="in-stock`+i+`" onclick="enableButtons(`+i+`)">ΞΑΝΑ ΣΕ ΑΠΟΘΕΜΑ</button>
                     </div>
               </div>
             </div>
@@ -32,15 +32,15 @@ window.onload = function rateOffers() {
 
 }
 
-function disableButtons() {
-    document.getElementById("like").disabled = true;
-    document.getElementById("dislike").disabled = true;
+function disableButtons(i) {
+    document.getElementById("like"+i).disabled = true;
+    document.getElementById("dislike"+i).disabled = true;
 }
 
-function enableButtons(){
-    if(document.getElementById("like").disabled && document.getElementById("dislike").disabled){
-        document.getElementById("like").disabled= false;
-        document.getElementById("dislike").disabled = false;
+function enableButtons(i){
+    if(document.getElementById("like"+i).disabled && document.getElementById("dislike").disabled){
+        document.getElementById("like"+i).disabled= false;
+        document.getElementById("dislike"+i).disabled = false;
     }
 
 }
@@ -49,7 +49,7 @@ function addLike(offer_id,likes){
     likes++;
     eleme_id = 'num_likes'+ offer_id;
     document.getElementById(eleme_id).innerText= 'Likes: '+likes;
-        const url = 'Shop.php?function=addLike&likes='+likes+'&offer_id='+offer_id;
+        const url = '../classes/Shop.php?function=addLike&likes='+likes+'&offer_id='+offer_id;
         const xhttp = new XMLHttpRequest();
         xhttp.open("GET", url);
         xhttp.send();
@@ -59,6 +59,6 @@ function addDislike(offer_id,dislikes){
     dislikes++;
     eleme_id = 'num_dislikes'+ offer_id;
     document.getElementById(eleme_id).innerText = 'Dislikes: '+dislikes;
-    const url = 'Shop.php?function=addDislike&dislikes='+dislikes+'&offer_id='+offer_id;
+    const url = '../classes/Shop.php?function=addDislike&dislikes='+dislikes+'&offer_id='+offer_id;
     fetch(url);
 }
