@@ -42,8 +42,6 @@ console.log(validated);
         document.getElementById("passworddata").innerHTML = this.responseText;
     }
     }
-    
-
 }
 
 
