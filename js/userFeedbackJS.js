@@ -15,7 +15,7 @@ window.onload = function rateOffers() {
                     <p id="num_dislikes`+offers[i].id+`">Dislikes: ` + offers[i].dislikes + `</p>
                     <button type="button" class="btn btn-primary" data-bs-toggle="collapse" data-bs-target="#btn`+i+`">Περισσότερα</button>
                     <div id="btn`+i+`" class="collapse">
-                       <p>Υποβολλή από: user123456789 score 20</p>
+                       <p>Υποβολλή από: `+offers[i].first_name+ ` `+offers[i].last_name+` <br>score: `+offers[i].score+`</p>
                        <button type="button" class="btn btn-success" id="like" onclick="addLike(`+offers[i].id+`,`+offers[i].likes+`)">LIKE</button>
                        <button type="button" class="btn btn-danger" id="dislike" onclick="addDislike(`+offers[i].id+`,`+offers[i].dislikes+`)">DISLIKE</button>
                        <button type="button" onclick="disableButtons()" id="out-of-stock" class="btn btn-warning">ΔΕΝ ΥΠΑΡΧΕΙ ΑΠΟΘΕΜΑ</button>
@@ -27,7 +27,7 @@ window.onload = function rateOffers() {
         }
         document.getElementById('main-body').innerHTML = all_offers;
     }
-    xhttp.open("POST", "Shop.php?function=getOffersFromCategory&category_id=0&shop_id="+shop_id);
+    xhttp.open("POST", "../classes/Shop.php?function=getOffersFromCategory&category_id=0&shop_id="+shop_id);
     xhttp.send();
 
 }

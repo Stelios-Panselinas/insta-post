@@ -6,9 +6,16 @@
     .mapid {
         height: 847px;
         padding: 9px;
-        @media only screen and (max-width: 768px) {
-            height: 847px;
+        @media screen and (max-width: 430px) {
+            height: 580px;
         }
+        @media screen and (max-width: 768px) {
+            height: 765px;
+        }
+        @media screen and (max-width: 1024px) {
+            height: 765px;
+        }
+
     }
 }
 .search-results{
@@ -19,10 +26,13 @@
     overflow-x: auto;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
-    height: 700px;
+    height: auto;
+    max-height: 700px;
 }
 
 .history-table{
     padding: 15px;
-    margin-top: auto!important;
+    /*margin-top: auto!important;*/
+    height: auto;
+    max-height: 700px;
 }

@@ -10,7 +10,7 @@
             </div>
 
             <!--Right side-->
-            <div class="col-sm-3 d-none d-sm-block">
+            <div class="col-sm-3">
                 <h3 class="text-secondary" id="user_id">Welcome user!</h3>
                 <br>
                 <!--search filters category-->
