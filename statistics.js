@@ -1,11 +1,27 @@
+
+
+
+const xhttp = new XMLHttpRequest();
+xhttp.onload = function (){
+  const statiData = [JSON.parse(this.responseText)]; 
+
+             xhttp.open("GET", "statistcs.php?startDate=" + startDate + "endDate=" + endDate );
+             xhttp.send(); 
+
+}
+     
+const labels = statiData.map(item => item.yaxis); 
+const data = statiData.map(item => item.xaxis);  
+
+
 const ctx = document.getElementById('myChart');
          const myChart = new Chart(ctx, {
           type: 'line',
           data: {
-            labels: ['2023-02-03', '2023-02-05', '2023-02-11', '2023-02-21', '2023-02-27'],
+            labels: labels,
             datasets: [{
               label: 'Πλήθος Προσφορών ανά ημέρα',
-              data: [12, 15, 6, 2, 3],
+              data: data,
               borderWidth: 1
             }]
           },
@@ -52,11 +68,13 @@ const ctx = document.getElementById('myChart');
              myChart.config.options.scales.x.min = startDate;
              myChart.config.options.scales.x.max = endDate;
              myChart.update();
-        }
+        
+             const xhttp = new XMLHttpRequest();
 
-        const xhttp = new XMLHttpRequest();
+             xhttp.open("GET", "statistcs.php?startDate=" + startDate + "endDate=" + endDate );
+             xhttp.send(); 
+     
+            }
 
-        xhttp.open("GET", "statistcs.php?startDate=" + startDate + "endDate=" + endDate );
-        xhttp.send(); 
-
+        
 
