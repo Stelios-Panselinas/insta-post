@@ -17,7 +17,7 @@
   <div class="container-md">
     <div class="row justify-content-center">
       <div class="col-12 w-50">
-        <form action="emaildata.php" method="get">
+        <form action="../classes/Login.php?function=login" method="post">
         <label for="uname"><h6>Email</h6></label>
         <input type="email" class="form-control" id="email" placeholder="Εισαγωγή Email" name="email">
 
@@ -27,7 +27,7 @@
         <br>
         <input type="submit" class="btn btn-success"  value="Σύνδεση">
         <div>
-          <a href="register.php" >Eγγραφή </a>
+          <a href="register" >Eγγραφή </a>
 
           <script src="email.js"></script>
           

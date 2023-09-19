@@ -11,7 +11,7 @@
 
             <!--Right side-->
             <div class="col-sm-3">
-                <h3 class="text-secondary" id="user_id">Welcome user!</h3>
+                <h3 class="text-secondary" id="user_id">Welcome <?php echo $_SESSION['userData']['first_name'].' '.$_SESSION['userData']['last_name'] ?></h3>
                 <br>
                 <!--search filters category-->
                 <h4 class="text-primary">Αναζήτηση βάση Κατηγορίας</h4>

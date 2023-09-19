@@ -11,7 +11,7 @@ $pageController = new PageController();
 
 if (isset($_SESSION['userData']['logged_in'])) {
     $page = $_GET['page'];
-} elseif($_GET['page'] === 'register.php') {
+} elseif($_GET['page'] === 'register') {
     $page = 'register';
 }else{
     $page = 'login';

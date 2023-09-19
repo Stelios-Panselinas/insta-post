@@ -1,3 +1,5 @@
+<?php
+//session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +29,7 @@
     <div class="col-12 w-50">
       
         <p>Συμπληρώστε αυτήν την φόρμα για να φτιάξετε καινούριο λογαριασμό.</p>
-
+        <form action="../classes/Login.php?function=register" method="post">
         <label for="first_name"><b>First Name</b></label>
         <input type="text" class="form-control" id="first_name" placeholder="Enter First Name" name="first_name" required>
         <br><label for="last_name"><b>Last Name</b></label>
@@ -37,28 +39,22 @@
         <label for="email"><b>Email</b></label>
         <input type="email" class="form-control" id="email" placeholder="Enter Email" name="email" required>
 
-        <label for="psw"><b>Κωδικός Πρόσβασης</b></label>
-        <input type="password" class="form-control" placeholder="Enter Password" name="psw" required id="password">
+        <label for="password"><b>Κωδικός Πρόσβασης</b></label>
+        <input type="password" class="form-control" placeholder="Enter Password" name="password" required id="password">
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <script src="password requirements.js"></script> 
-          <p id="length"></p>
-          <p id="capital"></p>
-          <p id="number"></p>
-          <p id="symbol"></p>  
-        
-      
-
-        <label for="psw-repeat"><b>Επανάληψη Κωδικόυ Πρόσβασης</b></label>
-        <input type="password" class="form-control" placeholder="Repeat Password" name="psw-repeat" required>
-    
+        <label for="password2"><b>Επανάληψη Κωδικόυ Πρόσβασης</b></label>
+        <input type="password" class="form-control" placeholder="Repeat Password" name="password2" id="password2" required>
+            <?php if (isset($_SESSION['error_message'])) {
+                echo '<div style="color: red;">' . $_SESSION['error_message'] . '</div>';
+            }
+            ?>
         <label>
           <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Να με θυμάσαι
         </label>
         <p>Φτιάχνοντας λογαριασμό συμφωνείτε στους <a href="#">Όρους και Προϋποθέσεις</a>.</p>
-     
-        <button class="btn btn-success" onclick="isPasswordValid()"> Εγγραφή</button>
-      
+            <input type="submit" class="btn btn-success" value="Εγγραφή">
+    </form>
   </div>
  </div>
 </body>
