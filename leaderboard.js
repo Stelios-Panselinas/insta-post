@@ -1,62 +1,54 @@
-
 function leadertable() {
 
-    const xhttp = new XMLHttpRequest();
+  const xhttp = new XMLHttpRequest();
 
-    xhttp.open("GET", "leaderboard.php?" );
-    xhttp.send();
-    xhttp.onload = function (){
-        const tableData = JSON.parse(this.responseText); // Initialize this with the JSON data received from PHP
+  xhttp.open("GET", "leaderboard.php?" );
+  xhttp.send();
+  xhttp.onload = function (){
+      const tableData = JSON.parse(this.responseText); // Initialize this with the JSON data received from PHP
+      
+  }
+
+  } 
+
 
 const itemsPerPage = 10; // Number of items to display per page
 let currentPage = 1; // Current page
 
-// Function to display data for the current page
-function displayTablePage() {
-
-  const table = document.getElementById('leaderboard');
-  const start = (currentPage - 1) * itemsPerPage;
+function paginateData(tableData, page) {
+  const start = (page - 1) * itemsPerPage;
   const end = start + itemsPerPage;
-  const pageData = tableData.slice(start, end);
-
-  // Clear the table body
-  table.innerHTML = '';
-
-  // Loop through the page data and add rows to the table
-  pageData.forEach(item => {
-    const row = table.insertRow();
-    // Add cells and populate data here
-  });
-
+  return tableData.slice(start, end);
 }
 
-            document.getElementById('prevPage').addEventListener('click', () => {
-            if (currentPage > 1) {
-                                     currentPage--;
-                                     displayTablePage();
-                                   }
-                                  });
-  
-  // Event listener for the "Next" button
-            document.getElementById('nextPage').addEventListener('click', () => {
-               if (currentPage < Math.ceil(tableData.length / itemsPerPage)) {
-                   currentPage++;
-                    displayTablePage();
-                    }
-                   });
-  
-  // Initial display of the first page
-              displayTablePage();
-    
-    
-    } 
+function displayPage(tableData) {
+  // Render data on the page, e.g., populate a table
+}
 
-       
+// Event listeners for navigation buttons
+document.getElementById('prevPage').addEventListener('click', () => {
+  if (currentPage > 1) {
+    currentPage--;
+    const pageData = paginateData(tableData, currentPage);
+    displayPage(pageData);
+  }
+});
 
-} 
+document.getElementById('nextPage').addEventListener('click', () => {
+  if (currentPage < totalPages) {
+    currentPage++;
+    const pageData = paginateData(tableData, currentPage);
+    displayPage(pageData);
+  }
+});
+
+const totalPages = Math.ceil(tableData.length / itemsPerPage);
+
+const initialPageData = paginateData(tableData, currentPage);
+displayPage(initialPageData);
 
 
 
 
-// Event listener for the "Previous" button
+
 
