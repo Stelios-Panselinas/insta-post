@@ -36,7 +36,7 @@
     </nav>
     <div class="container mt-4">
         
-        <table class="table" onload="leadertable()">
+        <table class="table">
           <thead class="table-dark">
             <tr>
               <th>Αριθμός Κατάταξης</th>
@@ -44,7 +44,7 @@
               <th>Tokens Προηγούμενου Μήνα</th>
               <th>Συνολικά Tokens</th>
             </tr>
-          
+          </thead>
           <tbody id="leaderboard">
 
           </tbody>
@@ -53,11 +53,11 @@
         
         
         
-        
-        <div id="pagination">
-          <button class="btn btn-primary" id="prevPage">Previous</button>
-          <button class="btn btn-primary" id="nextPage">Next</button>
+        <div class="container">
+          <div id="pagination-wrapper">
+          </div>
         </div>
+        
 
         <script src = "leaderboard.js"></script>
     </div>      

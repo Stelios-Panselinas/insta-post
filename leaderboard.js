@@ -12,43 +12,73 @@ function leadertable() {
   } 
 
 
-const itemsPerPage = 10; // Number of items to display per page
-let currentPage = 1; // Current page
+var tableData = [
+  {
+    'first_name': "Panos Papadopoulos", 'cur_tokens': "7", 'total_tokens': "23"
+  },
+ {
+  'first_name': "Nikos Papadopoulos", 'cur_tokens': "8", 'total_tokens': "19"}
+]
 
-function paginateData(tableData, page) {
-  const start = (page - 1) * itemsPerPage;
-  const end = start + itemsPerPage;
-  return tableData.slice(start, end);
+var state = {
+  'querySet': tableData,
+  'page': 1,
+  'rows':10,
 }
 
-function displayPage(tableData) {
-  // Render data on the page, e.g., populate a table
+buildTable ()
+
+
+function pagination(querySet, page,rows){
+        var trimStart = (page - 1) * rows
+        var trimEnd = trimStart + rows
+
+        var trimmedData = querySet.slice(trimStart, trimEnd)
+
+        var pages = Math.ceil(querySet.length /rows)
+
+        return{
+          'querySet': trimmedData,
+          'pages': pages
+        }
 }
 
-// Event listeners for navigation buttons
-document.getElementById('prevPage').addEventListener('click', () => {
-  if (currentPage > 1) {
-    currentPage--;
-    const pageData = paginateData(tableData, currentPage);
-    displayPage(pageData);
+function pageButtons(pages){
+
+        var wrapper = document.getElementById('pagination-wrapper')
+        wrapper.innerHTML = ''
+
+        for (var page = 1; page <=pages; page++){
+          wrapper.innerHTML += `<button value=${page} class=page btn btn-sm btn-info">${page}</button>`
+        }
+
+        $('.page').on('click', function(){
+          $('#leaderboard').empty()
+
+          state.page = $(this).val()
+
+          buildTable()
+        }
+        )
+      }
+
+function buildTable() {
+  var table = $('#leaderboard')
+
+  var data = pagination(state.querySet, state.page, state.rows)
+ 
+  myList = data.querySet
+
+  for ( var i = 1 in myList) {
+
+    var row = ` <tr>
+                    <td></td>
+                    <td>${myList[i].first_name}</td>
+                    <td>${myList[i].cur_tokens}</td>
+                    <td>${myList[i].total_tokens}</td>
+    `
+    table.append(row)
   }
-});
 
-document.getElementById('nextPage').addEventListener('click', () => {
-  if (currentPage < totalPages) {
-    currentPage++;
-    const pageData = paginateData(tableData, currentPage);
-    displayPage(pageData);
-  }
-});
-
-const totalPages = Math.ceil(tableData.length / itemsPerPage);
-
-const initialPageData = paginateData(tableData, currentPage);
-displayPage(initialPageData);
-
-
-
-
-
-
+  pageButtons(data.pages)
+}
