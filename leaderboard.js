@@ -1,3 +1,5 @@
+var tableData = [];
+
 function leadertable() {
 
   const xhttp = new XMLHttpRequest();
@@ -5,25 +7,29 @@ function leadertable() {
   xhttp.open("GET", "leaderboard.php?" );
   xhttp.send();
   xhttp.onload = function (){
-      const tableData = JSON.parse(this.responseText); // Initialize this with the JSON data received from PHP
-      
-  }
+      tableData = JSON.parse(this.responseText); 
+      console.log(tableData);
+  
+  
+   transfer();
+  
+    }
 
   } 
 
+const state = this.transfer(tableData)
 
-var tableData = [
-  {
-    'first_name': "Panos Papadopoulos", 'cur_tokens': "7", 'total_tokens': "23"
-  },
- {
-  'first_name': "Nikos Papadopoulos", 'cur_tokens': "8", 'total_tokens': "19"}
-]
+debugger
 
+function transfer(tableData){
 var state = {
   'querySet': tableData,
   'page': 1,
   'rows':10,
+}
+
+return state;
+
 }
 
 buildTable ()
@@ -49,7 +55,7 @@ function pageButtons(pages){
         wrapper.innerHTML = ''
 
         for (var page = 1; page <=pages; page++){
-          wrapper.innerHTML += `<button value=${page} class=page btn btn-sm btn-info">${page}</button>`
+          wrapper.innerHTML += `<button value=${page} class=page btn btn-sm btn-primary">${page}</button>`
         }
 
         $('.page').on('click', function(){
