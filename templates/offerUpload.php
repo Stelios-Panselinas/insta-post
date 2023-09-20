@@ -9,7 +9,7 @@
                     
                         <input type="text" id="searchBar" class="form-control rounded" placeholder="Search" onkeyup="showResult(this.value)" />
                     
-                      <script src = "../js/offer.js"></script>
+                      <script src = "../js/user/offer.js"></script>
                       <select multiple class="form-select search-results" id="results" onclick="autoFill(this.value)">
                       </select>
                     </form>
@@ -50,4 +50,4 @@
 
             </div>         
         </div>
-    <script src="../js/offer.js"></script>
+    <script src="../js/user/offer.js"></script>

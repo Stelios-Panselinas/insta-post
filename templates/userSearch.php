@@ -32,4 +32,4 @@
 
     </div>
 </div>
-<script src="../js/map.js"></script>
+<script src="../js/user/map.js"></script>

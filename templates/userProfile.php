@@ -54,4 +54,4 @@
                 </div>
             </div>
         </div>
-        <script src="../js/userJS.js"></script>
+        <script src="../js/user/userJS.js"></script>
