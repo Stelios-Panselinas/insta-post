@@ -4,22 +4,20 @@ function leadertable() {
 
   const xhttp = new XMLHttpRequest();
 
-  xhttp.open("GET", "leaderboard.php?" );
+  xhttp.open("GET", "../classes/Admin.php?function=leaderboards" );
   xhttp.send();
   xhttp.onload = function (){
       tableData = JSON.parse(this.responseText); 
       console.log(tableData);
   
   
-   transfer();
+   transfer(tableData);
   
     }
 
   } 
 
 const state = this.transfer(tableData)
-
-debugger
 
 function transfer(tableData){
 var state = {

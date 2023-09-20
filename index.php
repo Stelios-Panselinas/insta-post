@@ -9,12 +9,10 @@ require_once 'includes/PageController.php';
 $pageController = new PageController();
 
 
-if (isset($_SESSION['userData']['logged_in'])) {
+if (isset($_SESSION['userData']['logged_in']) || isset($_SESSION['adminData']['logged_in'])) {
     $page = $_GET['page'];
 } elseif($_GET['page'] === 'register') {
     $page = 'register';
-}elseif(!empty($_SESSION['adminData'])) {
-    $page = $_GET['page'];
 }else{
     $page = 'login';
 }
@@ -22,11 +20,16 @@ if (isset($_SESSION['userData']['logged_in'])) {
 
 
 $data = [];
-if($page === 'login' || $page === 'userHome' || $page === 'register'){
-    $pageController->renderPageNoHeader($page, $data);
+if(isset($_SESSION['adminData'])){
+    $pageController->renderPageAdmin($page, $data);
 }else{
-    $pageController->renderPage($page, $data);
+    if($page === 'login' || $page === 'userHome' || $page === 'register'){
+        $pageController->renderPageNoHeader($page, $data);
+    }else{
+        $pageController->renderPage($page, $data);
+    }
 }
+
 
 //switch($page) {
 //    case 'userHome':

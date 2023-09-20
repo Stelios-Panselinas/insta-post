@@ -19,10 +19,10 @@
         <div class="col-12 w-50">
             <ul class="nav nav-tabs" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#home">Home</a>
+                    <a class="nav-link active" data-bs-toggle="tab" href="#home">User Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#menu1">Menu 1</a>
+                    <a class="nav-link" data-bs-toggle="tab" href="#menu1">Admin Login</a>
                 </li>
             </ul>
 
@@ -39,9 +39,8 @@
                         <span class="text-danger" id="loggin-message"></span>
                         <br>
                         <input type="submit" class="btn btn-success" value="Σύνδεση">
-                        <div>
-                            <a href="register">Eγγραφή </a>
-                        </div>
+                        <br>
+                        <a href="register">Eγγραφή </a>
                     </form>
                 </div>
                 <div id="menu1" class="container tab-pane fade"><br>
@@ -54,7 +53,7 @@
                                name="password_admin">
                         <span class="text-danger" id="loggin-message"></span>
                         <br>
-                        <input type="submit" class="btn btn-success" value="Σύνδεση">
+                        <input type="submit" class="btn btn-success" value="Σύνδεση Admin">
                     </form>
                 </div>
             </div>

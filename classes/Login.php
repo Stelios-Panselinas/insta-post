@@ -101,19 +101,19 @@ class Login extends Database{
         $stmt->bind_param('s', $email);
         $stmt->execute();
         $result = $stmt->get_result();
-        $userData = $result->fetch_assoc();
+        $adminData = $result->fetch_assoc();
 
-        $stored_hashed_password = $userData['password'];
+        $stored_hashed_password = $adminData['password'];
 
-        if (!empty($userData) && password_verify($entered_password, $stored_hashed_password)) {
+        if (!empty($adminData) && password_verify($entered_password, $stored_hashed_password)) {
             $adminData = array(
                 'email'=>$email,
-                'admin_id'=>$userData['user_id'],
-                'first_name'=>$userData['first_name'],
-                'last_name'=>$userData['last_name'],
+                'admin_id'=>$adminData['admin_id'],
+                'first_name'=>$adminData['first_name'],
+                'last_name'=>$adminData['last_name'],
                 'logged_in'=>true);
             session_start();
-            $_SESSION['adminData'] = $userData;
+            $_SESSION['adminData'] = $adminData;
             header("Location: ../newadmin");
         } else {
             echo 'Invalid email or password!';

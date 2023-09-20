@@ -54,7 +54,7 @@ const ctx = document.getElementById('myChart');
              myChart.update();
             
              const xhttp = new XMLHttpRequest();
-              xhttp.open("GET", "statistics.php?startDate=" + startDate + "&endDate=" + endDate );
+              xhttp.open("GET", "../classes/Admin.php?function=statistics&startDate=" + startDate + "&endDate=" + endDate );
               xhttp.send(); 
               xhttp.onload = function (){
               const staticData = JSON.parse(this.responseText); 

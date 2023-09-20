@@ -3,10 +3,9 @@
            
             <div class="col-12 col-sm-6 px-0">
                 <!-- the map left side-->
-                <div class="mapid" id="mapid">
+                <div class="map_admin" id="map_admin">
                     <script src="https://unpkg.com/leaflet@1.3.0/dist/leaflet.js"></script>
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-search/3.0.2/leaflet-search.min.js"></script>
-                    <script></script>
                 </div>
             </div>
 
@@ -29,7 +28,6 @@
                         <option value="4">Καθαριότητα</option>
                         <option value="5">Ποτά-Αναψυκτικά</option>
                     </select>
-                    <script src = "map.js"></script>
                     <button class="btn btn-primary" onclick="selectShops()" >Αναζήτηση</button>
                 </div>
                 <br>
@@ -60,7 +58,7 @@
                 <input type="text" id="price" name="price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                 <br>
                 <br>
-                <script src = "../upprod.js"></script>
+                <script src = "../js/upprod.js"></script>
                 <button class="btn btn-primary" onclick="productupdate()" >Ενημέρωση</button>
                 <br>
                 <br>
@@ -84,7 +82,7 @@
                     <br>
                     <br>
                     <button class="btn btn-primary" onclick="updatekataDatabase()" >Ενημέρωση</button>
-                    <script src = "../upprod.js"></script>
+                    <script src = "../js/upprod.js"></script>
                     
             </div>
 
@@ -94,5 +92,4 @@
 
     </div>
 </div>
-</body>
-</html>
+    <script src="../js/map_admin.js"></script>

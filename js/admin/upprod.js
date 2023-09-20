@@ -8,7 +8,7 @@ function productupdate() {
     const xhttp = new XMLHttpRequest();
         xhttp.onload = function () {
         }
-            xhttp.open("POST", "upprod.php?pname=" + pname + "&subCategory=" + subCategory + "&price=" + price );
+            xhttp.open("POST", "../classes/Admin.php?function=updateProduct&pname" + pname + "&subCategory=" + subCategory + "&price=" + price );
         xhttp.send();
 
 }
@@ -24,7 +24,7 @@ function updatekataDatabase () {
         xhttp.onload = function () {
            
         }
-        xhttp.open("POST", "upkatast.php?kname=" + kname + "&longt=" + longt + "&latit=" + latit + "&tupos=" + tupos );
+        xhttp.open("POST", "../classes/Admin.php?function=updateShop&kname=" + kname + "&longt=" + longt + "&latit=" + latit + "&tupos=" + tupos );
         xhttp.send();
     
    

@@ -1,4 +1,9 @@
+<?php
 
+if (!isset($_SESSION['adminData']['logged_in'])) {
+    header("Location: login");
+}
+?>
 <html>
 <head>
     <title> InstaPost </title>
@@ -28,16 +33,16 @@
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link" href="newadmin.html"><h5>Ενημέρωση E-Shop</h5></a>
+                    <a class="nav-link" href="newadmin"><h5>Ενημέρωση E-Shop</h5></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="leaderboards.php"><h5>Πίνακας Κατάταξης</h5></a>
+                    <a class="nav-link" href="leaderboards"><h5>Πίνακας Κατάταξης</h5></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="admin%20statistics.html"><h5>Στατιστικά</h5></a>
+                    <a class="nav-link" href="admin_statistics"><h5>Στατιστικά</h5></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><h5>Αποσύνδεση</h5></a>
+                    <a class="nav-link" href="logout"><h5>Αποσύνδεση</h5></a>
                 </li>
             </ul>
         </div>
