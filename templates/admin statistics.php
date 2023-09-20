@@ -24,10 +24,10 @@
                     <div class="collapse navbar-collapse" id="collapsibleNavbar">
                         <ul class="navbar-nav">
                         <li class="nav-item">
-                         <a class="nav-link" href="newadmin.html"><h5>Ενημέρωση E-Shop</h5></a>
+                         <a class="nav-link" href="newadmin.php"><h5>Ενημέρωση E-Shop</h5></a>
                          </li>
                          <li class="nav-item">
-                         <a class="nav-link" href="leaderboards.html"><h5>Πίνακας Κατάταξης</h5></a>
+                         <a class="nav-link" href="leaderboards.php"><h5>Πίνακας Κατάταξης</h5></a>
                         </li>
                              <li class="nav-item">
                             <a class="nav-link" href="admin statistics.html"><h5>Στατιστικά</h5></a>
@@ -59,7 +59,7 @@
         <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns/dist/chartjs-adapter-date-fns.bundle.min.js"></script>
       
     
-            <script src='statistics.js'></script>
+            <script src='../statistics.js'></script>
             
             
     </body>
