@@ -72,7 +72,7 @@ function showAllShopsWithOffers(userlat,userlon){
             }
         }
     }
-    xhttp.open("GET", "../classes/Shop.php?function=getAllShopsWithOffers");
+    xhttp.open("GET", "../../classes/Shop.php?function=getAllShopsWithOffers");
     xhttp.send();
 }
 
@@ -96,7 +96,7 @@ function showShopsWithoutOffer(userlat,userlon){
             let markerPosition = L.latLng([lat, log]);
             if(dinstance(userlat,userlon, shops[i].latitude, shops[i].longtitude)<= 0.500){
                 let marker = L.marker(L.latLng([lat, log]), {title: name});
-                marker.bindPopup('<strong>'+name+'</strong><br><br><a  href="offerUpload.html" class="btn btn-outline-success "><h6>Υποβολή Προσφοράς</h6></a>');
+                marker.bindPopup('<strong>'+name+'</strong><br><br><a  href="offerUpload" class="btn btn-outline-success "><h6>Υποβολή Προσφοράς</h6></a>');
                 marker.addTo(shopsWithoutOffersLayer);
             }else{
                 let marker = L.marker(L.latLng([lat, log]), {title: name});
@@ -106,7 +106,7 @@ function showShopsWithoutOffer(userlat,userlon){
 
         }
     }
-    xhttp.open("POST", "../classes/Shop.php?function=getAllShopsWithoutOffers");
+    xhttp.open("POST", "../../classes/Shop.php?function=getAllShopsWithoutOffers");
     xhttp.send();
 }
 
@@ -132,7 +132,7 @@ function selectShops() {
                 }
             }
         }
-        xhttp.open("POST", "../classes/Shop.php?function=getAllShopsWithOffersCategory&category_id=" + category_id);
+        xhttp.open("POST", "../../classes/Shop.php?function=getAllShopsWithOffersCategory&category_id=" + category_id);
         xhttp.send();
 
 }
@@ -178,7 +178,7 @@ function createPopup(shop_id, shop_name, lat, log, isSelected, inRange, category
         showOffers(all_offers,parseFloat(lat), parseFloat(log), isSelected);
         return all_offers;
     }
-        xhttp.open("POST", "../classes/Shop.php?function=getOffersFromCategory&category_id=" + category_id+"&shop_id="+shop_id);
+        xhttp.open("POST", "../../classes/Shop.php?function=getOffersFromCategory&category_id=" + category_id+"&shop_id="+shop_id);
         xhttp.send();
 }
 
@@ -201,7 +201,7 @@ function showOffers(offers, lat, log, isSelected){
 
 function storeShopID(shop_id){
     localStorage.setItem('shop id', shop_id);
-    window.location.href = 'userFeedback';
+    window.location.href = 'adminFeedback';
     //window.open('userFeedback.html');
 }
 

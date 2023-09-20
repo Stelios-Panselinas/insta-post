@@ -4,5 +4,3 @@
             
         </div>
         <script src="../js/user/userFeedbackJS.js"></script>
-    </body>
-</html>

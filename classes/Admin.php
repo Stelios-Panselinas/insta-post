@@ -58,6 +58,15 @@ class  Admin extends Database{
             echo "0 results";
         }
     }
+
+    public function deleteOffer($offer_id){
+        $this->connect();
+
+        $stmt = $this->prepare("DELETE FROM offers WHERE offer_id = ?;");
+        $stmt->bind_param("i", $offer_id);
+        $stmt->execute();
+        header("refresh: ../adminFeedback");
+    }
 }
 
 $admin = new Admin();
@@ -78,4 +87,7 @@ if ($_GET['function'] === "updateProduct") {
     $admin->statistics($startDate,$endDate);
 }elseif ($_GET['function'] === 'leaderboards'){
     $admin->leaderboards();
+}elseif ($_GET['function'] === 'deleteOffer'){
+    $offer_id = $_GET['offer_id'];
+    $admin->deleteOffer($offer_id);
 }

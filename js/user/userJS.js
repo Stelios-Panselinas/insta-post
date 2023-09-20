@@ -10,7 +10,7 @@ window.onload = function showInteractions(){
 }
 function updateUsername(){
     let newUsername = document.getElementById('username').value;
-    const url = '../classes/User.php?function=updateUsername&username='+newUsername;
+    const url = '../../classes/User.php?function=updateUsername&username='+newUsername;
     const xhttp = new XMLHttpRequest();
     xhttp.open("GET", url);
     xhttp.send();
@@ -31,7 +31,7 @@ function updatePassword(){
                 document.getElementById('oldPassMess').innerText = 'Password is not correct!';
             }
         }
-        xhttp.open("GET", '../classes/User.php?function=validateOldPassword&oldPassword='+oldPass);
+        xhttp.open("GET", '../../classes/User.php?function=validateOldPassword&oldPassword='+oldPass);
         xhttp.send();
 
         const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
@@ -47,7 +47,7 @@ function updatePassword(){
             return;
         }
 
-        const url = '../classes/User.php?function=updatePassword&newPassword='+newPass;
+        const url = '../../classes/User.php?function=updatePassword&newPassword='+newPass;
         xhttp.open("GET", url);
         xhttp.send();
 
@@ -60,7 +60,7 @@ function updatePassword(){
 
 
 function showHistory(){
-    let url = '../classes/User.php?function=showHistory'
+    let url = '../../classes/User.php?function=showHistory'
     const xhttp = new XMLHttpRequest();
     xhttp.open("GET", url);
     xhttp.send();
@@ -71,7 +71,7 @@ function showHistory(){
 }
 
 function showRates(){
-    let url = '../classes/User.php?function=showRates'
+    let url = '../../classes/User.php?function=showRates'
     const xhttp = new XMLHttpRequest();
     xhttp.open("GET", url);
     xhttp.send();

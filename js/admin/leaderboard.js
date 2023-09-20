@@ -4,7 +4,7 @@ function leadertable() {
 
   const xhttp = new XMLHttpRequest();
 
-  xhttp.open("GET", "../classes/Admin.php?function=leaderboards" );
+  xhttp.open("GET", "../../classes/Admin.php?function=leaderboards" );
   xhttp.send();
   xhttp.onload = function (){
       tableData = JSON.parse(this.responseText); 

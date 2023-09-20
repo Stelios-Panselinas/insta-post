@@ -8,7 +8,7 @@ function productupdate() {
     const xhttp = new XMLHttpRequest();
         xhttp.onload = function () {
         }
-            xhttp.open("POST", "../classes/Admin.php?function=updateProduct&pname" + pname + "&subCategory=" + subCategory + "&price=" + price );
+            xhttp.open("POST", "../../classes/Admin.php?function=updateProduct&pname" + pname + "&subCategory=" + subCategory + "&price=" + price );
         xhttp.send();
 
 }

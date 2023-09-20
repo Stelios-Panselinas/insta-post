@@ -9,7 +9,7 @@ function showResult(str) {
         document.getElementById("results").innerHTML = this.responseText;
     }
     var res = str.concat(str2);
-    xhttp.open("GET", "../classes/Offer.php?function=showResult&result="+res);
+    xhttp.open("GET", "../../classes/Offer.php?function=showResult&result="+res);
     xhttp.send();
 }
 
@@ -25,7 +25,7 @@ function autoFill(str){
         var selectElement = document.getElementById("category");
         selectElement.selectedIndex = category_id;
     }
-    xhttp.open("GET", "../classes/Offer.php?function=autoFill&text="+text);
+    xhttp.open("GET", "../../classes/Offer.php?function=autoFill&text="+text);
     xhttp.send();
 }
 
@@ -35,7 +35,7 @@ function sub(){
     xhttp.onload = function(){
         let element = document.getElementById("subcategory").innerHTML=this.responseText;
     }
-    xhttp.open("GET", "../classes/Offer.php?function=subcategoryFill&category_id="+category_id);
+    xhttp.open("GET", "../../classes/Offer.php?function=subcategoryFill&category_id="+category_id);
     xhttp.send();
 }
 
@@ -47,7 +47,7 @@ function prod(){
     xhttp.onload = function(){
         let element = document.getElementById("products").innerHTML=this.responseText;
     }
-    xhttp.open("GET", "../classes/Offer.php?function=productFill&subcategory_id="+subcategory_id);
+    xhttp.open("GET", "../../classes/Offer.php?function=productFill&subcategory_id="+subcategory_id);
     xhttp.send();
 }
 
@@ -62,7 +62,7 @@ function submit(){
     let price = parseFloat(document.getElementById('price').value);
 
     const xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "../classes/Offer.php?function=uploadOffer&category_id="+category_id+"&subcategory_id="+subcategory_id+"&product_id="+product_id+"&shop_id="+shop_id+"&price="+price);
+    xhttp.open("GET", "../../classes/Offer.php?function=uploadOffer&category_id="+category_id+"&subcategory_id="+subcategory_id+"&product_id="+product_id+"&shop_id="+shop_id+"&price="+price);
     xhttp.send();
     xhttp.onload = function (){
         element = document.getElementById("category");

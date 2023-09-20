@@ -79,7 +79,7 @@ class Shop extends Database {
             $offers = array();
             $i = 0;
         }else{
-            $stmt = $this->prepare("SELECT offers.offer_id, offers.user_id, offers.product_id, offers.price, offers.valid, offers.likes, offers.dislikes, offers.entry_daytime, product.name AS product_name, user.first_name, user.last_name, user.score FROM offers INNER JOIN product ON offers.product_id=product.product_id INNER JOIN user ON user.user_id = offers.user_id WHERE offers.shop_id=?;");
+            $stmt = $this->prepare("SELECT offers.offer_id, offers.user_id, offers.product_id, offers.price, offers.valid, offers.likes, offers.dislikes, offers.entry_daytime, product.name AS product_name, user.first_name, user.last_name, user.score FROM offers INNER JOIN product ON offers.product_id=product.product_id INNER JOIN user ON user.user_id = offers.user_id WHERE offers.shop_id=? and category_id=?;");
             $stmt->bind_param("ii", $shop_id, $category_id);
             $stmt->execute();
             $result = $stmt->get_result();

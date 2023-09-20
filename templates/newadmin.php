@@ -1,6 +1,5 @@
     <div class="container-fluid px-0 main-site">
         <div class="row px-0">
-           
             <div class="col-12 col-sm-6 px-0">
                 <!-- the map left side-->
                 <div class="map_admin" id="map_admin">
@@ -8,12 +7,9 @@
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-search/3.0.2/leaflet-search.min.js"></script>
                 </div>
             </div>
-
             <!--Right side-->
             <div class="col-sm-3 d-none d-sm-block">
-
                 <!--search filters category-->
-                
                 <br>
                 <br>
                 <h3 class="text-primary">Αναζήτηση βάση Κατηγορίας</h3>
@@ -58,7 +54,6 @@
                 <input type="text" id="price" name="price" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                 <br>
                 <br>
-                <script src = "../js/upprod.js"></script>
                 <button class="btn btn-primary" onclick="productupdate()" >Ενημέρωση</button>
                 <br>
                 <br>
@@ -82,7 +77,7 @@
                     <br>
                     <br>
                     <button class="btn btn-primary" onclick="updatekataDatabase()" >Ενημέρωση</button>
-                    <script src = "../js/upprod.js"></script>
+
                     
             </div>
 
@@ -91,5 +86,6 @@
         </div>
 
     </div>
-</div>
-    <script src="../js/map_admin.js"></script>
+
+    <script src="../js/admin/map_admin.js"></script>
+    <script src="../js/admin/upprod.js"></script>

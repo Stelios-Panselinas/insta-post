@@ -21,6 +21,7 @@ window.onload = function rateOffers() {
                        <button type="button" class="btn btn-danger" id="dislike`+offers[i].id+`" onclick="addDislike(`+offers[i].id+`,`+offers[i].dislikes+`)">DISLIKE</button>
                        <button type="button" onclick="disableButtons(`+offers[i].id+`)" id="out-of-stock`+offers[i].id+`" class="btn btn-warning">ΔΕΝ ΥΠΑΡΧΕΙ ΑΠΟΘΕΜΑ</button>
                        <button type="button" class="btn btn-info" id="in-stock`+i+`" onclick="enableButtons(`+offers[i].id+`)">ΞΑΝΑ ΣΕ ΑΠΟΘΕΜΑ</button></div>
+                       <button type="button" class="btn btn-danger" id="dislike`+offers[i].id+`" onclick="deleteOffer(`+offers[i].id+`)">DELETE</button>
               </div>
             </div>
             <br>`
@@ -29,6 +30,7 @@ window.onload = function rateOffers() {
                        <button type="button" class="btn btn-danger" id="dislike`+offers[i].id+`" onclick="addDislike(`+offers[i].id+`,`+offers[i].dislikes+`)" disabled>DISLIKE</button>
                        <button type="button" onclick="disableButtons(`+offers[i].id+`)" id="out-of-stock`+offers[i].id+`" class="btn btn-warning" disabled>ΔΕΝ ΥΠΑΡΧΕΙ ΑΠΟΘΕΜΑ</button>
                        <button type="button" class="btn btn-info" id="in-stock`+i+`" onclick="enableButtons(`+offers[i].id+`)">ΞΑΝΑ ΣΕ ΑΠΟΘΕΜΑ</button></div>
+                       <button type="button" class="btn btn-danger" id="dislike`+offers[i].id+`" onclick="deleteOffer(`+offers[i].id+`)">DELETE</button>
               </div>
             </div>
             <br>`
@@ -80,4 +82,11 @@ function addDislike(offer_id,dislikes){
     document.getElementById(eleme_id).innerText = 'Dislikes: '+dislikes;
     const url = '../../classes/Shop.php?function=addDislike&dislikes='+dislikes+'&offer_id='+offer_id;
     fetch(url);
+}
+
+function deleteOffer(offer_id){
+    const url = '../../classes/Admin.php?function=deleteOffer&offer_id='+offer_id;
+    const xhttp = new XMLHttpRequest();
+    xhttp.open("GET", url);
+    xhttp.send();
 }
