@@ -13,6 +13,8 @@ if (isset($_SESSION['userData']['logged_in'])) {
     $page = $_GET['page'];
 } elseif($_GET['page'] === 'register') {
     $page = 'register';
+}elseif(!empty($_SESSION['adminData'])) {
+    $page = $_GET['page'];
 }else{
     $page = 'login';
 }

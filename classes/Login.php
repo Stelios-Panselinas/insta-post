@@ -77,10 +77,6 @@ class Login extends Database{
         $userData = $result->fetch_assoc();
 
         $stored_hashed_password = $userData['password'];
-        $salt = substr($stored_hashed_password, 0, 32);
-
-
-        $entered_password_hashed = password_hash($entered_password . $salt, PASSWORD_BCRYPT);
 
         if (!empty($userData) && password_verify($entered_password, $stored_hashed_password)) {
             $userData = array(
@@ -92,6 +88,33 @@ class Login extends Database{
             session_start();
             $_SESSION['userData'] = $userData;
             header("Location: ../userHome");
+        } else {
+            echo 'Invalid email or password!';
+        }
+    }
+
+    public function signInAdmin($email, $entered_password){
+        $this->connect();
+
+        $sql = "SELECT password, admin_id, first_name, last_name FROM admin WHERE email=? ";
+        $stmt = $this->prepare($sql);
+        $stmt->bind_param('s', $email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $userData = $result->fetch_assoc();
+
+        $stored_hashed_password = $userData['password'];
+
+        if (!empty($userData) && password_verify($entered_password, $stored_hashed_password)) {
+            $adminData = array(
+                'email'=>$email,
+                'admin_id'=>$userData['user_id'],
+                'first_name'=>$userData['first_name'],
+                'last_name'=>$userData['last_name'],
+                'logged_in'=>true);
+            session_start();
+            $_SESSION['adminData'] = $userData;
+            header("Location: ../newadmin");
         } else {
             echo 'Invalid email or password!';
         }
@@ -112,5 +135,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $email = $_POST["email"];
         $password = $_POST["password"];
         $login->signIn($email, $password);
+    }elseif ($_GET['function'] === 'login_admin'){
+        $email = $_POST["email_admin"];
+        $password = $_POST["password_admin"];
+        $login->signInAdmin($email, $password);
     }
 }
