@@ -1,6 +1,6 @@
     <div class="container mt-4">
         
-        <table class="table" onload="leadertable()">
+        <table class="table" onload="leadertable()" id="table">
           <thead class="table-dark">
             <tr>
               <th>Αριθμός Κατάταξης</th>
@@ -13,7 +13,9 @@
 
           </tbody>
         </table>
+        <div class="pagination" id="pagination">
 
+        </div>
         
         
         
