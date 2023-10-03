@@ -1,6 +1,6 @@
 <?php
 require_once 'Database.php';
-//session_start();
+session_start();
 if (isset($_SESSION['error_message'])){
     $_SESSION['error_message'] = '';
 }
@@ -37,9 +37,10 @@ class Login extends Database{
         if (isset($errors)) {
             // Pass error messages as URL parameters
             $error_messages = implode("<br>", $errors);
+            session_start();
             $_SESSION['error_message'] = $error_messages;
-            header("Location: register");
-            exit();
+            header("Location: ../templates/register");
+            //exit();
         } else {
             $hashed_password = password_hash($_POST['password'], PASSWORD_DEFAULT);
 
@@ -57,12 +58,14 @@ class Login extends Database{
             $user_id = $result->fetch_assoc();
 
             $userData = array(
-                'email' => $email,
-                'user_id' => $user_id['user_id'],
-                'logged_in' => true);
+                'email'=>$email,
+                'user_id'=>$user_id['user_id'],
+                'first_name'=>$first_name,
+                'last_name'=>$last_name,
+                'logged_in'=>true);
             session_start();
             $_SESSION['userData'] = $userData;
-            header('Location: ../userHome');
+            header('Location: ../templates/userHome');
         }
     }
 
