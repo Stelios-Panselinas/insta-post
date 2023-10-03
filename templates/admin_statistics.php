@@ -1,7 +1,7 @@
 <br>
   <br>
  
-        <div class="column">
+        <div class="container column">
             
         <canvas id="myChart"></canvas>
         

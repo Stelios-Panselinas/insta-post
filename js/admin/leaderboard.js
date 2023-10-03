@@ -9,7 +9,7 @@ function displayItems(pageNumber, items) {
 
     table.innerHTML = '';
     displayedItems.forEach(item => {
-        var row = table.insertRow(0);
+        var row = table.insertRow(-1);
         var first_name = row.insertCell(0);
         var last_name = row.insertCell(1);
         var cur_tokens = row.insertCell(2);
