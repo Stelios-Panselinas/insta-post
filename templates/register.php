@@ -45,7 +45,7 @@ session_start(); ?>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <label for="password2"><b>Επανάληψη Κωδικόυ Πρόσβασης</b></label>
         <input type="password" class="form-control" placeholder="Repeat Password" name="password2" id="password2" required>
-            <?php if (isset($_SESSION['error_message'])) {
+             <?php if (isset($_SESSION['error_message'])) {
                 echo '<div style="color: red;">' . $_SESSION['error_message'] . '</div>';
             }
             ?>

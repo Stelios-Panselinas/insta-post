@@ -65,7 +65,7 @@ function showAllShopsWithOffers(userlat,userlon){
             let name = shops[i].name;
             let lat = shops[i].latitude;
             let log = shops[i].longitude;
-            if(dinstance(userlat,userlon, shops[i].latitude, shops[i].longitude)<= 0.500){
+            if(dinstance(userlat,userlon, shops[i].latitude, shops[i].longitude)<= 0.050){
                 createPopup(shop_id, name,lat,log,0, 1, 0);
             }else{
                 createPopup(shop_id, name,lat,log,0, 0, 0);
@@ -94,9 +94,9 @@ function showShopsWithoutOffer(userlat,userlon){
             let lat = shops[i].latitude;
             let log = shops[i].longtitude;
             let markerPosition = L.latLng([lat, log]);
-            if(dinstance(userlat,userlon, shops[i].latitude, shops[i].longtitude)<= 0.500){
+            if(dinstance(userlat,userlon, shops[i].latitude, shops[i].longtitude)<= 0.050){
                 let marker = L.marker(L.latLng([lat, log]), {title: name});
-                marker.bindPopup('<strong>'+name+'</strong><br><br><a  href="offerUpload" class="btn btn-outline-success "><h6>Υποβολή Προσφοράς</h6></a>');
+                marker.bindPopup('<strong>'+name+'</strong><br><br><a  href="offerUpload" onclick="storeShopID('+shop_id+')" class="btn btn-outline-success "><h6>Υποβολή Προσφοράς</h6></a>');
                 marker.addTo(shopsWithoutOffersLayer);
             }else{
                 let marker = L.marker(L.latLng([lat, log]), {title: name});
@@ -125,7 +125,7 @@ function selectShops() {
                 let name = shops[i].name;
                 let lat = shops[i].latitude;
                 let log = shops[i].longitude;
-                if (dinstance(userLat, userLon, shops[i].latitude, shops[i].longitude) <= 0.500) {
+                if (dinstance(userLat, userLon, shops[i].latitude, shops[i].longitude) <= 5.500) {
                     createPopup(shop_id, name, lat, log, 1, 1, category_id);
                 } else {
                     createPopup(shop_id, name, lat, log, 1, 0, category_id);
